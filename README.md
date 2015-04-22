@@ -2,6 +2,16 @@
 
 Particles for [condensation](https://github.com/SungardAS/condensation) that help build a AWS VPC.
 
+## Use
+
+    > npm install
+    > gulp
+
+Templates will be created in the `dist` directory
+
+To upload to S3 create `config/local.js` with bucket configuation and
+run `gulp deploy`
+
 ## Particles
 
 ### cftemplates
