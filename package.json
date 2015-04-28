@@ -11,7 +11,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "condensation": "^0.2.5",
+    "condensation": "sungardas/condensation#develop",
     "config": "^1.12.0",
     "particles-common-core": "sungardas/particles-common-core#develop"
   }

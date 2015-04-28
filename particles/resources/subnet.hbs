@@ -1,0 +1,28 @@
+"Type": "AWS::EC2::Subnet",
+"Properties": {
+  "CidrBlock": {
+    "Ref": "{{cidrLogicalId}}"
+  },
+  "AvailabilityZone": {
+    "Fn::If": [
+      "{{notDefaultAZCond}}",
+      {
+        "Ref": "{{azLogicalId}}"
+      },
+      {
+        "Ref": "AWS::NoValue"
+      }
+    ]
+  },
+  "VpcId": {
+    "Ref": "{{vpcIdLogicalId}}"
+  },
+  "Tags": [
+    {
+      "Key": "Name",
+      "Value": {
+        "Ref": "{{nameTagLogicalId}}"
+      }
+    }
+  ]
+}
