@@ -1,26 +1,11 @@
 {{#layout}}
   {{{parameter 'vpc_cidr' logicalId="VpcCidr"}}}
 
-  {{{
-    parameter 'module:particles-common-core' 'true_false'
-    logicalId="CreateVpcSecurityGroup"
-    default="false"
-    description="[true|false] Create a security group assigned to the new VPC"
-  }}}
+  {{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup"}}}
+  {{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication"}}}
+  {{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway"}}}
 
-  {{{
-    parameter 'module:particles-common-core' 'true_false'
-    logicalId="OpenVpcCommunication"
-    default="false"
-    description="[true|false] Open all communication within the VPC"
-  }}}
 
-  {{{
-    parameter 'module:particles-common-core' 'true_false'
-    logicalId="CreateInternetGateway"
-    default="false"
-    description="[true|false] Create an Internet Gateway for the VPC"
-  }}}
 
   {{{parameter 'name_tag' logicalId="NameTag"}}}
 

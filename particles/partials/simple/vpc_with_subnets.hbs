@@ -1,12 +1,14 @@
-{{{parameter 'vpc_cidr' logicalId="VpcCidr" default="10.0.0.0/16"}}}
-{{{parameter 'module:particles-common-core' 'true_false' logicalId="CreateVpcSecurityGroup" default="true"}}}
-{{{parameter 'module:particles-common-core' 'true_false' logicalId="CreateInternetGateway" default="true"}}}
-{{{parameter 'module:particles-common-core' 'true_false' logicalId="OpenVpcCommunication" default="true"}}}
-
-{{#parameter logicalId="NameTag"}}
-  "Description": "Will set the name tag for all created resources.",
-  "Type": "String"
-{{/parameter}}
+---
+  vpcCidr: "10.0.0.0/16"
+  createVpcSecurityGroup: "true"
+  createInternetGateway: "true"
+  openVpcCommunication: "true"
+---
+{{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
+{{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
+{{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication" default=createInternetGateway}}}
+{{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway" default=openVpcCommunication}}}
+{{{parameter 'name_tag' logicalId="NameTag"}}}
 
 {{#resource logicalId="Vpc"}}
   "Type": "AWS::CloudFormation::Stack",
