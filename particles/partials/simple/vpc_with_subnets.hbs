@@ -10,6 +10,10 @@ openVpcCommunication: "true"
 {{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway" default=createInternetGateway}}}
 {{{parameter 'name_tag' logicalId="NameTag"}}}
 
+{{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateVpcSecurityGroup" parameterName="CreateVpcSecurityGroup"}}},
+{{{condition 'module:particles-common-core' 'is_true' logicalId="CondOpenVpcCommunication" parameterName="OpenVpcCommunication"}}},
+{{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateInternetGateway" parameterName="CreateInternetGateway"}}}
+
 {{#resource logicalId="Vpc"}}
   "Type": "AWS::CloudFormation::Stack",
   "Properties": {
