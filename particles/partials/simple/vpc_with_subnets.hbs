@@ -24,7 +24,7 @@
         "Ref": "NameTag"
       }
     },
-    "TemplateURL": "{{{templateS3Url 'vpc.template.json'}}}"
+    "TemplateURL": "{{{templateS3Url 'simple/vpc.template.json'}}}"
   }
 {{/resource}}
 
@@ -73,7 +73,7 @@
         },
         "NameTag": { "Ref": "NameTag" }
       },
-      "TemplateURL": "{{{templateS3Url 'subnet.template.json'}}}"
+      "TemplateURL": "{{{templateS3Url 'simple/subnet.template.json'}}}"
     },
     "DependsOn": "Vpc"
   {{/resource}}
