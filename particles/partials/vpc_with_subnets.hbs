@@ -1,0 +1,94 @@
+{{{parameter 'vpc_cidr' logicalId="VpcCidr" default="10.0.0.0/16"}}}
+{{{parameter 'module:particles-common-core' 'true_false' logicalId="CreateVpcSecurityGroup" default="true"}}}
+{{{parameter 'module:particles-common-core' 'true_false' logicalId="CreateInternetGateway" default="true"}}}
+{{{parameter 'module:particles-common-core' 'true_false' logicalId="OpenVpcCommunication" default="true"}}}
+
+{{#parameter logicalId="NameTag"}}
+  "Description": "Will set the name tag for all created resources.",
+  "Type": "String"
+{{/parameter}}
+
+{{#resource logicalId="Vpc"}}
+  "Type": "AWS::CloudFormation::Stack",
+  "Properties": {
+    "Parameters": {
+      "VpcCidr": {
+        "Ref": "VpcCidr"
+      },
+      "CreateVpcSecurityGroup": {"Ref": "CreateVpcSecurityGroup"},
+      "CreateInternetGateway": {"Ref": "CreateVpcSecurityGroup"},
+      "OpenVpcCommunication": {"Ref": "CreateVpcSecurityGroup"},
+      "NameTag": {
+        "Ref": "NameTag"
+      }
+    },
+    "TemplateURL": "{{{templateS3Url 'vpc.template.json'}}}"
+  }
+{{/resource}}
+
+{{#output logicalId="VpcId"}}
+  "Value" : {"Fn::GetAtt": ["Vpc","Outputs.VpcId"]},
+  "Description" : "VPC ID"
+{{/output}}
+
+{{#output logicalId="InfraSecurityGroupId"}}
+  "Value" : {"Fn::GetAtt": ["Vpc", "Outputs.SecurityGroupId"] },
+  "Description" : "Infra Security Group"
+{{/output}}
+
+{{#each subnets}}
+  {{{parameter 'module:particles-common-core' 'cidr_range' logicalId=this.name default=this.default}}}
+
+  {{#parameter logicalIdPrefix=this.short logicalId="AvailabilityZone"}}
+    "Description": "Availability Zone",
+    "Type": "String",
+    "Default": "auto",
+    "ConstraintDescription": "Must be a valid AZ for the region or 'auto'."
+  {{/parameter}}
+
+  {{#condition logicalIdPrefix=this.short logicalId="AutoSelection"}}
+    "Fn::Equals": [{"Ref": "{{this.short}}AvailabilityZone"}, "auto"]
+  {{/condition}}
+
+  {{#resource logicalId=this.short}}
+    "Type": "AWS::CloudFormation::Stack",
+    "Properties": {
+      "Parameters": {
+      "SubnetCidr": {"Ref": "{{this.name}}"},
+        "AvailabilityZone": {
+          "Fn::If": [
+          "{{this.short}}AutoSelection",
+            {"Fn::Select": ["0",{"Fn::GetAZs" : "" }]},
+            {"Ref": "{{this.short}}AvailabilityZone"}
+          ]
+        },
+        "VpcId": { "Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
+        "RouteTableId": {
+          "Fn::GetAtt": [
+            "Vpc",
+            "Outputs.RouteTableId"
+          ]
+        },
+        "NameTag": { "Ref": "NameTag" }
+      },
+      "TemplateURL": "{{{templateS3Url 'subnet.template.json'}}}"
+    },
+    "DependsOn": "Vpc"
+  {{/resource}}
+
+  {{#output logicalId=this.short logicalIdSuffix="Id"}}
+    "Value" : {"Fn::GetAtt": ["{{this.short}}","Outputs.SubnetId"]},
+    "Description" : "{{this.short}}"
+  {{/output}}
+
+  {{#output logicalId=this.short logicalIdSuffix="AZ"}}
+    "Value": {
+      "Fn::If": [
+        "{{this.short}}AutoSelection",
+        {"Fn::Select": ["{{@index}}",{"Fn::GetAZs" : "" }]},
+        {"Ref": "{{this.short}}AvailabilityZone"}
+      ]
+    }
+  {{/output}}
+
+{{/each}}
