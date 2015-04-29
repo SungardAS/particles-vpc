@@ -6,8 +6,8 @@ openVpcCommunication: "true"
 ---
 {{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
 {{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
-{{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication" default=createInternetGateway}}}
-{{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway" default=openVpcCommunication}}}
+{{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication" default=openVpcCommunication}}}
+{{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway" default=createInternetGateway}}}
 {{{parameter 'name_tag' logicalId="NameTag"}}}
 
 {{#resource logicalId="Vpc"}}
