@@ -35,7 +35,8 @@ openVpcCommunication: "true"
 
 {{#output logicalId="InfraSecurityGroupId"}}
   "Value" : {"Fn::GetAtt": ["Vpc", "Outputs.SecurityGroupId"] },
-  "Description" : "Infra Security Group"
+  "Description" : "Infra Security Group",
+  "Condition": "CondCreateVpcSecurityGroup"
 {{/output}}
 
 {{#each subnets}}
