@@ -1,8 +1,8 @@
 ---
-  vpcCidr: "10.0.0.0/16"
-  createVpcSecurityGroup: "true"
-  createInternetGateway: "true"
-  openVpcCommunication: "true"
+vpcCidr: "10.0.0.0/16"
+createVpcSecurityGroup: "true"
+createInternetGateway: "true"
+openVpcCommunication: "true"
 ---
 {{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
 {{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
