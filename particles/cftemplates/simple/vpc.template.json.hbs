@@ -1,17 +1,11 @@
 {{#layout}}
   {{{parameter 'vpc_cidr' logicalId="VpcCidr"}}}
 
-  {{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup"}}}
-  {{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication"}}}
-  {{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway"}}}
-
-
+  {{{set 'simple/create_vpc_security_group'}}}
+  {{{set 'simple/open_vpc_communication'}}}
+  {{{set 'simple/create_internet_gateway'}}}
 
   {{{parameter 'name_tag' logicalId="NameTag"}}}
-
-  {{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateVpcSecurityGroup" parameterName="CreateVpcSecurityGroup"}}},
-  {{{condition 'module:particles-common-core' 'is_true' logicalId="CondOpenVpcCommunication" parameterName="OpenVpcCommunication"}}},
-  {{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateInternetGateway" parameterName="CreateInternetGateway"}}}
 
   {{#resource logicalId="Vpc"}}
     "Type": "AWS::EC2::VPC",
@@ -35,7 +29,7 @@
 
   {{#resource logicalId="InternetGateway"}}
     "Type": "AWS::EC2::InternetGateway",
-    "Condition": "CondCreateInternetGateway",
+    "Condition": "CreateInternetGatewayCond",
     "Properties": {
       "Tags": [
         {
@@ -76,7 +70,7 @@
 
   {{#resource logicalId="VpcSecurityGroup"}}
     "Type": "AWS::EC2::SecurityGroup",
-    "Condition": "CondCreateVpcSecurityGroup",
+    "Condition": "CreateVpcSecurityGroupCond",
     "Properties": {
       "GroupDescription": "VPC Default Security Group",
       "VpcId": {
@@ -101,7 +95,7 @@
 
   {{#resource logicalId="SecurityGroupIngress"}}
     "Type": "AWS::EC2::SecurityGroupIngress",
-    "Condition": "CondOpenVpcCommunication",
+    "Condition": "OpenVpcCommunicationCond",
     "Properties": {
       "GroupId": {
         "Fn::GetAtt": ["VpcSecurityGroup","GroupId"]
@@ -142,7 +136,7 @@
 
   {{#resource logicalId="GatewayAttachment"}}
     "Type": "AWS::EC2::VPCGatewayAttachment",
-    "Condition": "CondCreateInternetGateway",
+    "Condition": "CreateInternetGatewayCond",
     "Properties": {
       "VpcId": {
         "Ref": "Vpc"
@@ -155,7 +149,7 @@
 
   {{#resource logicalId="DefaultRoute"}}
     "Type": "AWS::EC2::Route",
-    "Condition": "CondCreateInternetGateway",
+    "Condition": "CreateInternetGatewayCond",
     "Properties": {
       "DestinationCidrBlock": "0.0.0.0/0",
       "RouteTableId": {
@@ -184,7 +178,7 @@
     "Value": {
       "Ref": "VpcSecurityGroup"
     },
-    "Condition": "CondCreateVpcSecurityGroup"
+    "Condition": "CreateVpcSecurityGroupCond"
   {{/output}}
 
 {{/layout}}
