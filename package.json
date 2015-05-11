@@ -1,6 +1,6 @@
 {
   "name": "particles-vpc",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "Particles for Condensation that help build a AWS VPC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,8 +11,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "condensation": "^0.2.5",
+    "condensation": "^0.3.1",
     "config": "^1.12.0",
-    "particles-common-core": "^0.0.1"
+    "particles-common-core": "^0.3.0"
   }
 }

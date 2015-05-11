@@ -1,0 +1,39 @@
+{{#layout}}
+  {{{parameter 'module:particles-common-core' 'cidr_range' logicalId="SubnetCidr"}}}
+  {{{parameter 'simple/availability_zone' logicalId="AvailabilityZone"}}}
+  {{{parameter 'simple/vpc_id' logicalId="VpcId"}}}
+  {{{parameter 'simple/route_table_id' logicalId="RouteTableId"}}}
+  {{{parameter 'name_tag' logicalId="NameTag"}}}
+
+  {{{
+    condition 'simple/not_default_route_table'
+    logicalId="NotDefaultRouteTableCond"
+    routeTableLogicalId="RouteTableId"
+  }}}
+
+  {{{condition 'simple/not_default_az' logicalId="NotDefaultAZCond" }}}
+  {{{condition 'simple/is_default_az' logicalId="IsDefaultAZCond" }}}
+
+
+  {{{
+    resource 'simple/subnet'
+    logicalId="Subnet"
+    cidrLogicalId="SubnetCidr"
+    notDefaultAZCond="NotDefaultAZCond"
+    azLogicalId="AvailabilityZone"
+    vpcIdLogicalId="VpcId"
+    nameTagLogicalId="NameTag"
+  }}}
+
+  {{{
+    resource 'simple/route_table_association'
+    logicalId="RouteTableAssociation"
+    notDefaultRouteTableCond="NotDefaultRouteTableCond"
+    routeTableLogicalId="RouteTableId"
+    subnetLogicalId="Subnet"
+  }}}
+
+  {{{output 'simple/subnet_id' logicalId="SubnetId"}}}
+  {{{output 'simple/availability_zone' logicalId="AvailabilityZone"}}}
+
+{{/layout}}

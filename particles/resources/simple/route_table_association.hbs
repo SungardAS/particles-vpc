@@ -1,0 +1,10 @@
+"Type": "AWS::EC2::SubnetRouteTableAssociation",
+"Condition": "{{notDefaultRouteTableCond}}",
+"Properties": {
+  "RouteTableId": {
+    "Ref": "{{routeTableLogicalId}}"
+  },
+  "SubnetId": {
+    "Ref": "{{subnetLogicalId}}"
+  }
+}

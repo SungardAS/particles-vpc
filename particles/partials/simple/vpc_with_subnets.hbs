@@ -1,0 +1,101 @@
+---
+vpcCidr: "10.0.0.0/16"
+createVpcSecurityGroup: "true"
+createInternetGateway: "true"
+openVpcCommunication: "true"
+---
+{{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
+{{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
+{{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication" default=openVpcCommunication}}}
+{{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway" default=createInternetGateway}}}
+{{{parameter 'name_tag' logicalId="NameTag"}}}
+
+{{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateVpcSecurityGroup" parameterName="CreateVpcSecurityGroup"}}},
+{{{condition 'module:particles-common-core' 'is_true' logicalId="CondOpenVpcCommunication" parameterName="OpenVpcCommunication"}}},
+{{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateInternetGateway" parameterName="CreateInternetGateway"}}}
+
+{{#resource logicalId="Vpc"}}
+  "Type": "AWS::CloudFormation::Stack",
+  "Properties": {
+    "Parameters": {
+      "VpcCidr": {
+        "Ref": "VpcCidr"
+      },
+      "CreateVpcSecurityGroup": {"Ref": "CreateVpcSecurityGroup"},
+      "CreateInternetGateway": {"Ref": "CreateVpcSecurityGroup"},
+      "OpenVpcCommunication": {"Ref": "CreateVpcSecurityGroup"},
+      "NameTag": {
+        "Ref": "NameTag"
+      }
+    },
+    "TemplateURL": "{{{templateS3Url 'simple/vpc.template.json'}}}"
+  }
+{{/resource}}
+
+{{#output logicalId="VpcId"}}
+  "Value" : {"Fn::GetAtt": ["Vpc","Outputs.VpcId"]},
+  "Description" : "VPC ID"
+{{/output}}
+
+{{#output logicalId="InfraSecurityGroupId"}}
+  "Value" : {"Fn::GetAtt": ["Vpc", "Outputs.SecurityGroupId"] },
+  "Description" : "Infra Security Group",
+  "Condition": "CondCreateVpcSecurityGroup"
+{{/output}}
+
+{{#each subnets}}
+  {{{parameter 'module:particles-common-core' 'cidr_range' logicalId=this.name default=this.default}}}
+
+  {{#parameter logicalIdPrefix=this.short logicalId="AvailabilityZone"}}
+    "Description": "Availability Zone",
+    "Type": "String",
+    "Default": "auto",
+    "ConstraintDescription": "Must be a valid AZ for the region or 'auto'."
+  {{/parameter}}
+
+  {{#condition logicalIdPrefix=this.short logicalId="AutoSelection"}}
+    "Fn::Equals": [{"Ref": "{{this.short}}AvailabilityZone"}, "auto"]
+  {{/condition}}
+
+  {{#resource logicalId=this.short}}
+    "Type": "AWS::CloudFormation::Stack",
+    "Properties": {
+      "Parameters": {
+      "SubnetCidr": {"Ref": "{{this.name}}"},
+        "AvailabilityZone": {
+          "Fn::If": [
+          "{{this.short}}AutoSelection",
+          {"Fn::Select": [{{@index}},{"Fn::GetAZs" : "" }]},
+            {"Ref": "{{this.short}}AvailabilityZone"}
+          ]
+        },
+        "VpcId": { "Fn::GetAtt": [ "Vpc", "Outputs.VpcId" ] },
+        "RouteTableId": {
+          "Fn::GetAtt": [
+            "Vpc",
+            "Outputs.RouteTableId"
+          ]
+        },
+        "NameTag": { "Ref": "NameTag" }
+      },
+      "TemplateURL": "{{{templateS3Url 'simple/subnet.template.json'}}}"
+    },
+    "DependsOn": "Vpc"
+  {{/resource}}
+
+  {{#output logicalId=this.short logicalIdSuffix="Id"}}
+    "Value" : {"Fn::GetAtt": ["{{this.short}}","Outputs.SubnetId"]},
+    "Description" : "{{this.short}}"
+  {{/output}}
+
+  {{#output logicalId=this.short logicalIdSuffix="AZ"}}
+    "Value": {
+      "Fn::If": [
+        "{{this.short}}AutoSelection",
+        {"Fn::Select": ["{{@index}}",{"Fn::GetAZs" : "" }]},
+        {"Ref": "{{this.short}}AvailabilityZone"}
+      ]
+    }
+  {{/output}}
+
+{{/each}}

@@ -1,6 +1,6 @@
 # particles-vpc
 
-Particles for [condensation](https://github.com/SungardAS/condensation) that help build a AWS VPC.
+Particles for [condensation](https://github.com/SungardAS/condensation) that help build an AWS VPC.
 
 ## Use
 
