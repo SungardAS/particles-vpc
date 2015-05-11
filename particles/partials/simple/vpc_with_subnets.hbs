@@ -5,14 +5,11 @@ createInternetGateway: "true"
 openVpcCommunication: "true"
 ---
 {{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
-{{{parameter 'simple/create_vpc_security_group' logicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
-{{{parameter 'simple/open_vpc_communication' logicalId="OpenVpcCommunication" default=openVpcCommunication}}}
-{{{parameter 'simple/create_internet_gateway' logicalId="CreateInternetGateway" default=createInternetGateway}}}
 {{{parameter 'name_tag' logicalId="NameTag"}}}
 
-{{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateVpcSecurityGroup" parameterName="CreateVpcSecurityGroup"}}},
-{{{condition 'module:particles-common-core' 'is_true' logicalId="CondOpenVpcCommunication" parameterName="OpenVpcCommunication"}}},
-{{{condition 'module:particles-common-core' 'is_true' logicalId="CondCreateInternetGateway" parameterName="CreateInternetGateway"}}}
+{{{set 'simple/create_vpc_security_group' parameterLogicalId="CreateVpcSecurityGroup" conditionLogicalId="CondCreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
+{{{set 'simple/open_vpc_communication' parameterLogicalId="OpenVpcCommunication" conditionLogicalId="CondOpenVpcCommunication" default=openVpcCommunication}}}
+{{{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway" conditionLogicalId="CondCreateInternetGateway" default=createInternetGateway}}}
 
 {{#resource logicalId="Vpc"}}
   "Type": "AWS::CloudFormation::Stack",
