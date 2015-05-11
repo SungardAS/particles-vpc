@@ -1,6 +1,6 @@
 {
   "name": "particles-vpc",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Particles for Condensation that help build a AWS VPC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
