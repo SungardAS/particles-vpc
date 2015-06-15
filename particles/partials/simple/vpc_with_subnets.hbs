@@ -43,14 +43,14 @@ openVpcCommunication: "true"
 {{#each subnets}}
   {{{parameter 'module:particles-common-core' 'cidr_range' logicalId=this.name default=this.default}}}
 
-  {{#parameter logicalIdPrefix=this.short logicalId="AvailabilityZone"}}
+  {{#parameter logicalId=(concat this.short "AvailabilityZone")}}
     "Description": "Availability Zone",
     "Type": "String",
     "Default": "auto",
     "ConstraintDescription": "Must be a valid AZ for the region or 'auto'."
   {{/parameter}}
 
-  {{#condition logicalIdPrefix=this.short logicalId="AutoSelection"}}
+  {{#condition logicalId=(concat this.short "AutoSelection")}}
     "Fn::Equals": [{"Ref": "{{this.short}}AvailabilityZone"}, "auto"]
   {{/condition}}
 
