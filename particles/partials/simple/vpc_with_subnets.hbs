@@ -7,9 +7,9 @@ openVpcCommunication: "true"
 {{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
 {{{parameter 'name_tag' logicalId="NameTag"}}}
 
-{{{set 'simple/create_vpc_security_group' parameterLogicalId="CreateVpcSecurityGroup" conditionLogicalId="CondCreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
-{{{set 'simple/open_vpc_communication' parameterLogicalId="OpenVpcCommunication" conditionLogicalId="CondOpenVpcCommunication" default=openVpcCommunication}}}
-{{{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway" conditionLogicalId="CondCreateInternetGateway" default=createInternetGateway}}}
+{{{set 'simple/create_vpc_security_group' parameterLogicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
+{{{set 'simple/open_vpc_communication' parameterLogicalId="OpenVpcCommunication" default=openVpcCommunication}}}
+{{{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway" default=createInternetGateway}}}
 
 {{#resource logicalId="Vpc"}}
   "Type": "AWS::CloudFormation::Stack",
@@ -19,8 +19,8 @@ openVpcCommunication: "true"
         "Ref": "VpcCidr"
       },
       "CreateVpcSecurityGroup": {"Ref": "CreateVpcSecurityGroup"},
-      "CreateInternetGateway": {"Ref": "CreateVpcSecurityGroup"},
-      "OpenVpcCommunication": {"Ref": "CreateVpcSecurityGroup"},
+      "CreateInternetGateway": {"Ref": "CreateInternetGateway"},
+      "OpenVpcCommunication": {"Ref": "OpenVpcCommunication"},
       "NameTag": {
         "Ref": "NameTag"
       }
@@ -37,7 +37,7 @@ openVpcCommunication: "true"
 {{#output logicalId="InfraSecurityGroupId"}}
   "Value" : {"Fn::GetAtt": ["Vpc", "Outputs.SecurityGroupId"] },
   "Description" : "Infra Security Group",
-  "Condition": "CondCreateVpcSecurityGroup"
+  "Condition": "CreateVpcSecurityGroupIsTrueCondition"
 {{/output}}
 
 {{#each subnets}}
