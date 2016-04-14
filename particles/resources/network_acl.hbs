@@ -1,0 +1,7 @@
+{{#resource "module:particles-common-core" "base"
+  type="AWS::EC2::NetworkAcl"
+}}
+  "Properties": {
+  "VpcId": {{helper "module:particles-common-core" "propertyValue" vpcId}}
+  }
+{{/resource}}

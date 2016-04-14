@@ -4,12 +4,12 @@ createVpcSecurityGroup: "true"
 createInternetGateway: "true"
 openVpcCommunication: "true"
 ---
-{{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}}
-{{{parameter 'name_tag' logicalId="NameTag"}}}
+{{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}
+{{parameter 'name_tag' logicalId="NameTag"}}
 
-{{{set 'simple/create_vpc_security_group' parameterLogicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}}
-{{{set 'simple/open_vpc_communication' parameterLogicalId="OpenVpcCommunication" default=openVpcCommunication}}}
-{{{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway" default=createInternetGateway}}}
+{{set 'simple/create_vpc_security_group' parameterLogicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}
+{{set 'simple/open_vpc_communication' parameterLogicalId="OpenVpcCommunication" default=openVpcCommunication}}
+{{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway" default=createInternetGateway}}
 
 {{#resource logicalId="Vpc"}}
   "Type": "AWS::CloudFormation::Stack",
@@ -25,7 +25,7 @@ openVpcCommunication: "true"
         "Ref": "NameTag"
       }
     },
-    "TemplateURL": "{{{templateS3Url 'simple/vpc.template.json'}}}"
+    "TemplateURL": "{{templateS3Url 'simple/vpc.template.json'}}"
   }
 {{/resource}}
 
@@ -41,7 +41,7 @@ openVpcCommunication: "true"
 {{/output}}
 
 {{#each subnets}}
-  {{{parameter 'module:particles-common-core' 'cidr_range' logicalId=this.name default=this.default}}}
+  {{parameter 'module:particles-common-core' 'cidr_range' logicalId=this.name default=this.default}}
 
   {{#parameter logicalId=(concat this.short "AvailabilityZone")}}
     "Description": "Availability Zone",

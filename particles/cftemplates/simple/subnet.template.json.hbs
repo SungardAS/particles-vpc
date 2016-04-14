@@ -1,39 +1,42 @@
 {{#layout}}
-  {{{parameter 'module:particles-common-core' 'cidr_range' logicalId="SubnetCidr"}}}
-  {{{parameter 'simple/availability_zone' logicalId="AvailabilityZone"}}}
-  {{{parameter 'simple/vpc_id' logicalId="VpcId"}}}
-  {{{parameter 'simple/route_table_id' logicalId="RouteTableId"}}}
-  {{{parameter 'name_tag' logicalId="NameTag"}}}
 
-  {{{
+  {{parameter 'module:particles-common-core' 'cidr_range' logicalId="SubnetCidr"}}
+
+  {{parameter 'availability_zone' logicalId="AvailabilityZone"}}
+  {{parameter 'vpc_id' logicalId="VpcId"}}
+  {{parameter 'route_table_id' logicalId="RouteTableId"}}
+
+  {{parameter 'name_tag' logicalId="NameTag" default="particles-vpc"}}
+
+  {{
     condition 'simple/not_default_route_table'
     logicalId="NotDefaultRouteTableCond"
     routeTableLogicalId="RouteTableId"
-  }}}
+  }}
 
-  {{{condition 'simple/not_default_az' logicalId="NotDefaultAZCond" }}}
-  {{{condition 'simple/is_default_az' logicalId="IsDefaultAZCond" }}}
+  {{condition 'simple/not_default_az' logicalId="NotDefaultAZCond" }}
+  {{condition 'simple/is_default_az' logicalId="IsDefaultAZCond" }}
 
 
-  {{{
-    resource 'simple/subnet'
+  {{
+    resource "subnet"
     logicalId="Subnet"
-    cidrLogicalId="SubnetCidr"
-    notDefaultAZCond="NotDefaultAZCond"
-    azLogicalId="AvailabilityZone"
-    vpcIdLogicalId="VpcId"
-    nameTagLogicalId="NameTag"
-  }}}
+    cidrBlock='{"Ref": "SubnetCidr"}'
+    definedAZCond="NotDefaultAZCond"
+    availabilityZone='{"Ref": "AvailabilityZone"}'
+    vpcId='{"Ref": "VpcId"}'
+  }}
 
-  {{{
-    resource 'simple/route_table_association'
+  {{
+    resource 'route_table_association'
     logicalId="RouteTableAssociation"
-    notDefaultRouteTableCond="NotDefaultRouteTableCond"
-    routeTableLogicalId="RouteTableId"
-    subnetLogicalId="Subnet"
-  }}}
+    routeTablelId='{"Ref": "RouteTableId"}'
+    subnetId='{"Ref": "Subnet"}'
+    condition="NotDefaultRouteTableCond"
+  }}
 
-  {{{output 'simple/subnet_id' logicalId="SubnetId"}}}
-  {{{output 'simple/availability_zone' logicalId="AvailabilityZone"}}}
+
+  {{output 'subnet_id' logicalId="SubnetId"}}
+  {{output 'availability_zone' logicalId="AvailabilityZone" azLogicalId="AvailabilityZone"}}
 
 {{/layout}}

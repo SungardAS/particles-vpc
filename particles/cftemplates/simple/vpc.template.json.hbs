@@ -1,11 +1,11 @@
 {{#layout}}
-  {{{parameter 'vpc_cidr' logicalId="VpcCidr"}}}
+  {{parameter 'vpc_cidr' logicalId="VpcCidr"}}
 
-  {{{set 'simple/create_vpc_security_group'}}}
-  {{{set 'simple/open_vpc_communication'}}}
-  {{{set 'simple/create_internet_gateway'}}}
+  {{set 'simple/create_vpc_security_group'}}
+  {{set 'simple/open_vpc_communication'}}
+  {{set 'simple/create_internet_gateway'}}
 
-  {{{parameter 'name_tag' logicalId="NameTag"}}}
+  {{parameter 'name_tag' logicalId="NameTag"}}
 
   {{#resource logicalId="Vpc"}}
     "Type": "AWS::EC2::VPC",
@@ -16,40 +16,25 @@
       "InstanceTenancy": "default",
       "EnableDnsSupport": "true",
       "EnableDnsHostnames": "true",
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
+      "Tags": [{"Key": "Name", "Value": {"Ref": "NameTag" } }]
     }
   {{/resource}}
 
-  {{#resource logicalId="InternetGateway"}}
-    "Type": "AWS::EC2::InternetGateway",
-    "Condition": "CreateInternetGatewayIsTrueCondition",
+  {{#
+    resource "internet_gateway"
+    logicalId="InternetGateway"
+    condition="CreateInternetGatewayIsTrueCondition"
+  }}
     "Properties": {
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
+      "Tags": [{"Key": "Name", "Value": {"Ref": "NameTag"} }]
     }
   {{/resource}}
 
-  {{#resource logicalId="NetworkAcl"}}
-    "Type": "AWS::EC2::NetworkAcl",
-    "Properties": {
-      "VpcId": {
-        "Ref": "Vpc"
-      }
-    }
-  {{/resource}}
+  {{
+    resource "network_acl"
+    logicalId="NetworkAcl"
+    vpcId='{"Ref": "Vpc"}'
+  }}
 
   {{#resource logicalId="RouteTable"}}
     "Type": "AWS::EC2::RouteTable",
@@ -57,14 +42,7 @@
       "VpcId": {
         "Ref": "Vpc"
       },
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
+      "Tags": [{"Key": "Name", "Value": {"Ref": "NameTag"} }]
     }
   {{/resource}}
 
