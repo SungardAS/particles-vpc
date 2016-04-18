@@ -1,15 +1,15 @@
-{{#resource "module:particles-common-core" "base"
+{{#resource "m:core" "base"
   type="AWS::EC2::Subnet"
 }}
 "Properties": {
-  "CidrBlock": {{helper "module:particles-common-core" "propertyValue" cidrBlock}},
+  "CidrBlock": {{helper "m:core" "propertyValue" cidrBlock}},
   "AvailabilityZone": {
     "Fn::If": [
       "{{definedAZCond}}",
-      {{helper "module:particles-common-core" "propertyValue" availabilityZone}},
+      {{helper "m:core" "propertyValue" availabilityZone}},
       {"Ref": "AWS::NoValue"}
     ]
   },
-  "VpcId": {{helper "module:particles-common-core" "propertyValue" vpcId}}
+  "VpcId": {{helper "m:core" "propertyValue" vpcId}}
 }
 {{/resource}}

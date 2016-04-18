@@ -1,7 +1,10 @@
-"Description": "Route table that the subnet will attach to.",
-"Default": "default",
-"Type": "String",
-"MinLength": "1",
-"MaxLength": "255",
-"AllowedPattern": "[\\x20-\\x7E]*",
-"ConstraintDescription": "can contain only ASCII characters."
+{{
+  parameter "m:core" "base"
+  description="Route table that the subnet will attach to."
+  default="default"
+  type="String"
+  minLength="1"
+  maxLength="255"
+  allowedPattern="[\\x20-\\x7E]*"
+  constraintDescription="can contain only ASCII characters."
+}}

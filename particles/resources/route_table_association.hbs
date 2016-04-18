@@ -1,8 +1,8 @@
-{{#resource "module:particles-common-core" "base"
+{{#resource "m:core" "base"
   type="AWS::EC2::SubnetRouteTableAssociation"
 }}
 "Properties": {
-  "RouteTableId": {{helper "module:particles-common-core" "propertyValue" routeTableId}},
-  "SubnetId": {{helper "module:particles-common-core" "propertyValue" subnetId}}
+  "RouteTableId": {{helper "m:core" "propertyValue" routeTableId}},
+  "SubnetId": {{helper "m:core" "propertyValue" subnetId}}
 }
 {{/resource}}

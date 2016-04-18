@@ -1,14 +1,10 @@
 ---
 vpcCidr: "10.0.0.0/16"
-createVpcSecurityGroup: "true"
 createInternetGateway: "true"
-openVpcCommunication: "true"
 ---
 {{parameter 'vpc_cidr' logicalId="VpcCidr" default=vpcCidr}}
 {{parameter 'name_tag' logicalId="NameTag"}}
 
-{{set 'simple/create_vpc_security_group' parameterLogicalId="CreateVpcSecurityGroup" default=createVpcSecurityGroup}}
-{{set 'simple/open_vpc_communication' parameterLogicalId="OpenVpcCommunication" default=openVpcCommunication}}
 {{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway" default=createInternetGateway}}
 
 {{#resource logicalId="Vpc"}}
@@ -18,9 +14,7 @@ openVpcCommunication: "true"
       "VpcCidr": {
         "Ref": "VpcCidr"
       },
-      "CreateVpcSecurityGroup": {"Ref": "CreateVpcSecurityGroup"},
       "CreateInternetGateway": {"Ref": "CreateInternetGateway"},
-      "OpenVpcCommunication": {"Ref": "OpenVpcCommunication"},
       "NameTag": {
         "Ref": "NameTag"
       }
@@ -36,12 +30,11 @@ openVpcCommunication: "true"
 
 {{#output logicalId="InfraSecurityGroupId"}}
   "Value" : {"Fn::GetAtt": ["Vpc", "Outputs.SecurityGroupId"] },
-  "Description" : "Infra Security Group",
-  "Condition": "CreateVpcSecurityGroupIsTrueCondition"
+  "Description" : "Infra Security Group"
 {{/output}}
 
 {{#each subnets}}
-  {{parameter 'module:particles-common-core' 'cidr_range' logicalId=this.name default=this.default}}
+  {{parameter 'm:core' 'cidr_range' logicalId=this.name default=this.default}}
 
   {{#parameter logicalId=(concat this.short "AvailabilityZone")}}
     "Description": "Availability Zone",
@@ -75,7 +68,7 @@ openVpcCommunication: "true"
         },
         "NameTag": { "Ref": "NameTag" }
       },
-      "TemplateURL": "{{{templateS3Url 'simple/subnet.template.json'}}}"
+      "TemplateURL": "{{templateS3Url 'simple/subnet.template.json'}}"
     },
     "DependsOn": "Vpc"
   {{/resource}}
