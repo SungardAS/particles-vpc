@@ -20,6 +20,9 @@ if (process.env.TRAVIS) {
   if (process.env.TRAVIS_PULL_REQUEST !== "false") {
     versionPath = ["PR",process.env.TRAVIS_PULL_REQUEST].join('/');
   }
+  else if (process.env.TRAVIS_TAG) {
+    versionPath = ["release",process.env.TRAVIS_TAG].join('/');
+  }
   else {
     versionPath = process.env.TRAVIS_BRANCH;
   }
