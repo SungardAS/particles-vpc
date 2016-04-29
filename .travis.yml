@@ -9,3 +9,7 @@ matrix:
     env: DEPLOY=true
 after_script: if [[ $DEPLOY == "true" ]] ; then ./node_modules/.bin/gulp condensation:deploy
   ; else echo "no deploy" ; fi
+env:
+  global:
+  - secure: aqXS1OyAROODvPz/7bkfVWYFbBgvzPa7HiD+n+7KhJOnjCxZYFoLUK2jO03u/8Jgs9ZY/2vpyBdAc6ITwyY9PE9CE70wKxshKQPJ+EwZUQhv9ukmoezusOy36RV3hJGTE5sgQJbmk16pg9jMk6m8OdX06TK9QSgDAsDpNmI8Q+o=
+  - secure: CGwnsjBJJyEhFcf56Afwn29Ri2URnwAwRRaqa6dtkdSqWCr4vU3kweAF4sz6GFehcFrTFPnM9onqVRGAw5t7Jr8CZkIbOkAiMtk97+ttp5bkEn0xBOQG8QAAXcOaVMTtW41nqPGkl3AGNohs1Llxtqqf35DimQ+VxrkfEo76LUg=
