@@ -1,6 +1,4 @@
-{{output "m:core" "base" logicalId="VpcId" value=(helper "m:core" "ref" vpcLogicalId) }}
+{{output "m:core" "base" logicalId="VpcId" value=(ref vpcLogicalId) }}
 {{output "vpc_cidr_block" logicalId="CidrBlock"}}
 {{output "vpc_default_security_group" logicalId="DefaultSecurityGroupId"}}
 {{output "vpc_default_network_acl" logicalId="DefaultNetworkAcl"}}
-
-{{set "subnet_all_outputs" logicalIdPrefix="bbb"}}
