@@ -14,6 +14,16 @@ var regions = [
 ];
 
 var buckets = [];
+var versionPath = gitrev.branch();
+
+if (process.env.TRAVIS) {
+  if (process.env.TRAVIS_PULL_REQUEST !== "false") {
+    versionPath = ["PR",process.env.TRAVIS_PULL_REQUEST].join('/');
+  }
+  else {
+    versionPath = process.env.TRAVIS_BRANCH;
+  }
+}
 
 regions.forEach(function(regionName) {
   buckets.push({
@@ -21,7 +31,7 @@ regions.forEach(function(regionName) {
       region: regionName,
       bucket: 'condensation-particles.'+regionName
     },
-    prefix: 'particles-vpc/'+gitrev.branch(),
+    prefix: 'particles-vpc/'+versionPath,
     clean: true,
     validate: true,
     create: true
