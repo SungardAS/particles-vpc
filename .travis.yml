@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- 5
+- 4
+- 0.12
+matrix:
+  include:
+  - node_js: 6
+    env: DEPLOY=true
+after_script: if [[ $DEPLOY == "true" ]] ; then ./node_modules/.bin/gulp condensation:deploy
+  ; else echo "no deploy" ; fi
