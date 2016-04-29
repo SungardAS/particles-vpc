@@ -21,3 +21,4 @@ deploy:
   on:
     tags: true
     repo: SungardAS/particles-vpc
+    node: 5
