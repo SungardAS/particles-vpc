@@ -1,42 +1,8 @@
 {{#layout}}
 
-  {{parameter 'm:core' 'cidr_range' logicalId="SubnetCidr"}}
+  {{parameter "vpc_id" logicalId="VpcId"}}
+  {{parameter "name_tag" logicalId="NameTag" default="particles-vpc"}}
 
-  {{parameter 'availability_zone' logicalId="AvailabilityZone"}}
-  {{parameter 'vpc_id' logicalId="VpcId"}}
-  {{parameter 'route_table_id' logicalId="RouteTableId"}}
-
-  {{parameter 'name_tag' logicalId="NameTag" default="particles-vpc"}}
-
-  {{
-    condition 'simple/not_default_route_table'
-    logicalId="NotDefaultRouteTableCond"
-    routeTableLogicalId="RouteTableId"
-  }}
-
-  {{condition 'simple/not_default_az' logicalId="NotDefaultAZCond" }}
-  {{condition 'simple/is_default_az' logicalId="IsDefaultAZCond" }}
-
-
-  {{
-    resource "subnet"
-    logicalId="Subnet"
-    cidrBlock='{"Ref": "SubnetCidr"}'
-    definedAZCond="NotDefaultAZCond"
-    availabilityZone='{"Ref": "AvailabilityZone"}'
-    vpcId='{"Ref": "VpcId"}'
-  }}
-
-  {{
-    resource 'route_table_association'
-    logicalId="RouteTableAssociation"
-    routeTablelId='{"Ref": "RouteTableId"}'
-    subnetId='{"Ref": "Subnet"}'
-    condition="NotDefaultRouteTableCond"
-  }}
-
-
-  {{output 'subnet_id' logicalId="SubnetId"}}
-  {{output 'availability_zone' logicalId="AvailabilityZone" azLogicalId="AvailabilityZone"}}
+  {{set "simple/subnet" nameTag='{"Ref": "NameTag"}' vpcId=(ref "VpcId") logicalIdPrefix="aaa"}}
 
 {{/layout}}

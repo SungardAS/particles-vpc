@@ -9,30 +9,16 @@
 
   {{parameter 'vpc_cidr' logicalId="VpcCidr"}}
 
-  {{#resource logicalId="Vpc"}}
-    "Type": "AWS::EC2::VPC",
+  {{#resource "vpc" logicalId="Vpc" cidr=(ref "VpcCidr")}}
     "Properties": {
-      "CidrBlock": {
-        "Ref": "VpcCidr"
-      },
       "InstanceTenancy": "default",
       "EnableDnsSupport": "true",
       "EnableDnsHostnames": "true",
-      "Tags": [{"Key": "Name", "Value": {"Ref": "NameTag" } }]
+      "Tags": [{"Key": "Name", "Value": {{ref "NameTag"}} }]
     }
   {{/resource}}
 
-  {{#output logicalId="VpcId"}}
-    "Value": { "Ref": "Vpc" }
-  {{/output}}
-
-  {{#output logicalId="DefaultSecurityGroupId"}}
-    "Value": {"Fn::GetAtt": ["Vpc","DefaultSecurityGroup"]}
-  {{/output}}
-
-  {{#output logicalId="DefaultNetworkAcl"}}
-    "Value": {"Fn::GetAtt": ["Vpc","DefaultNetworkAcl"]}
-  {{/output}}
+  {{set "vpc_all_outputs" vpcLogicalId="Vpc"}}
 
 
   {{!-- Internet Gateway --}}
@@ -44,7 +30,7 @@
     condition="CreateInternetGatewayIsTrueCondition"
   }}
     "Properties": {
-      "Tags": [{"Key": "Name", "Value": {"Ref": "NameTag"} }]
+      "Tags": [{"Key": "Name", "Value": {{ref "NameTag"}} }]
     }
   {{/resource}}
 
@@ -52,21 +38,17 @@
     "Type": "AWS::EC2::VPCGatewayAttachment",
     "Condition": "CreateInternetGatewayIsTrueCondition",
     "Properties": {
-      "VpcId": {
-        "Ref": "Vpc"
-      },
-      "InternetGatewayId": {
-        "Ref": "InternetGateway"
-      }
+      "VpcId": {{ref "Vpc"}},
+      "InternetGatewayId": {{ref "InternetGateway"}}
     }
   {{/resource}}
 
   {{#resource logicalId="PublicRouteTable"}}
     "Type": "AWS::EC2::RouteTable",
     "Properties": {
-      "VpcId": {"Ref": "Vpc"},
+      "VpcId": {{ref "Vpc"}},
       "Tags": [
-        {"Key": "Name", "Value": {"Ref": "NameTag"} },
+        {"Key": "Name", "Value": {{ref "NameTag"}} },
         {"Key": "Network", "Value": "Public"}
       ]
     }
@@ -77,14 +59,12 @@
     "Condition": "CreateInternetGatewayIsTrueCondition",
     "Properties": {
       "DestinationCidrBlock": "0.0.0.0/0",
-      "RouteTableId": {"Ref": "PublicRouteTable"},
-      "GatewayId": {"Ref": "InternetGateway"}
+      "RouteTableId": {{ref "PublicRouteTable"}},
+      "GatewayId": {{ref "InternetGateway"}}
     }
   {{/resource}}
 
-  {{#output logicalId="PublicRouteTableId"}}
-    "Value": {"Ref": "PublicRouteTable"}
-  {{/output}}
+  {{output "m:core" "base" logicalId="PublicRouteTableId" value=(ref "PublicRouteTable")}}
 
 
 {{/layout}}
