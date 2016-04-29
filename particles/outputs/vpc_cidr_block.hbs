@@ -1,5 +1,5 @@
 ---
-description: The default network ACassociated with the VPC
+description: The set of IP addresses for the VPC
 ---
 {{#output "m:core" "base"}}
   "Value": {"Fn::GetAtt": ["{{vpcLogicalId}}","CidrBlock"]}

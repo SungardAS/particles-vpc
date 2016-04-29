@@ -13,3 +13,11 @@ env:
   global:
   - secure: aqXS1OyAROODvPz/7bkfVWYFbBgvzPa7HiD+n+7KhJOnjCxZYFoLUK2jO03u/8Jgs9ZY/2vpyBdAc6ITwyY9PE9CE70wKxshKQPJ+EwZUQhv9ukmoezusOy36RV3hJGTE5sgQJbmk16pg9jMk6m8OdX06TK9QSgDAsDpNmI8Q+o=
   - secure: CGwnsjBJJyEhFcf56Afwn29Ri2URnwAwRRaqa6dtkdSqWCr4vU3kweAF4sz6GFehcFrTFPnM9onqVRGAw5t7Jr8CZkIbOkAiMtk97+ttp5bkEn0xBOQG8QAAXcOaVMTtW41nqPGkl3AGNohs1Llxtqqf35DimQ+VxrkfEo76LUg=
+deploy:
+  provider: npm
+  email: as.us.awscto@sungardas.com
+  api_key:
+    secure: fwUlctl3fiKCmERPl5e6aO9n4ZhKw3VTy/CKUrIZ78lxPakGDaJ2Dm6X5sAEPhuH5Oc7e21YHUjsmKN7lSyBUmBQe7yP8ob/npgoStOd3BVQ3K3rzt55doMCrpASpERmddLdHkZ0CkjNu7lZIgAhqL/zervvA52gfZc9Fmf0I08=
+  on:
+    tags: true
+    repo: SungardAS/particles-vpc
