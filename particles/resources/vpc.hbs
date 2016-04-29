@@ -1,0 +1,6 @@
+{{#resource "m:core" "base" logicalId="Vpc"}}
+  "Type": "AWS::EC2::VPC",
+  "Properties": {
+    "CidrBlock": {{"helper" "m:core" "propertyValue"  cidr}}
+  }
+{{/resource}}

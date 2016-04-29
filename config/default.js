@@ -1,22 +1,36 @@
+var gitrev = require('git-rev-sync');
+
+var regions = [
+  'us-east-1',
+  'us-west-1',
+  'us-west-2',
+  'eu-west-1',
+  'eu-central-1',
+  'ap-northeast-1',
+  'ap-northeast-2',
+  'ap-southeast-1',
+  'ap-southeast-2',
+  'sa-east-1'
+];
+
+var buckets = [];
+
+regions.forEach(function(regionName) {
+  buckets.push({
+    aws: {
+      region: regionName,
+      bucket: 'condensation-particles.'+regionName
+    },
+    prefix: 'particles-vpc/'+gitrev.branch(),
+    clean: true,
+    validate: true,
+    create: true
+  });
+});
+
+
 var config = {
-  s3: [
-    {
-      // AWS specific options
-      aws: {
-        region: 'us-east-1',
-        bucket: '',
-      },
-
-      // Run CloudFormation validation before deploying this bucket
-      validate: true,
-
-      // Create this bucket if it does not already exist
-      create: true
-    }
-  ],
-  // Remove 'condensation' from the beginning of the task names
-  taskPrefix: '',
-
+  s3: buckets,
   dist: 'dist'
 };
 

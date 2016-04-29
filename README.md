@@ -1,25 +1,38 @@
 # particles-vpc
 
-Particles for [condensation](https://github.com/SungardAS/condensation) that help build an AWS VPC.
+[![condensation][condensation-image]][condensation-url]
 
-## Use
+[![NPM][npm-image]][npm-url]
+[![Gitter][gitter-image]][gitter-url]
 
-    > npm install
-    > gulp
 
-Templates will be created in the `dist` directory
+## Summary
 
-To upload to S3 create `config/local.js` with bucket configuation and
-run `gulp deploy`
+[Condensation][condensation-url] particles that create VPC resources.
 
 ## Particles
 
 ### cftemplates
 
-#### subnet
+### conditions
 
-A stack that will build a basic Subnet with options for AvailabilityZone, VPC and routing.
+### outputs
 
-#### vpc
+### parameters
 
-A stack that will build a basic VPC with options for creating a SecurityGroup, InternetGateway and open communication within the VPC.
+### partials
+
+### resources
+
+## Ready To Launch
+
+### Simple VPC
+
+### Simple Subnet
+
+[condensation-image]: https://raw.githubusercontent.com/SungardAS/condensation/master/docs/images/condensation_logo.png
+[condensation-url]: https://github.com/SungardAS/condensation
+[npm-image]: https://badge.fury.io/js/particles-vpc.svg
+[npm-url]: https://npmjs.org/package/particles-vpc
+[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-url]: https://gitter.im/SungardAS/condensation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge

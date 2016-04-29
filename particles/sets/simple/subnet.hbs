@@ -1,0 +1,40 @@
+{{!-- Subnet --}}
+{{parameter "m:core" "cidr_range" logicalId="SubnetCidr"}}
+{{parameter "availability_zone" logicalId="AvailabilityZone"}}
+
+{{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "AvailabilityZone")}}
+
+{{#
+  resource "subnet"
+  logicalId="Subnet"
+  cidrBlock=(ref "SubnetCidr")
+  vpcId=vpcId
+}}
+  "Properties": {
+    "AvailabilityZone": {
+      "Fn::If": [
+        "{{scopeId "AvailabilityZoneIsPopulated"}}",
+        {{ref "AvailabilityZone"}},
+        {"Ref": "AWS::NoValue"}
+      ]
+    }
+  }
+{{/resource}}
+
+{{set "subnet_all_outputs" subnetLogicalId=(scopeId "Subnet")}}
+
+
+{{!-- Route Table --}}
+{{parameter "route_table_id" logicalId="RouteTableId"}}
+
+{{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "RouteTableId")}}
+
+{{
+  resource "route_table_association"
+  logicalId="RouteTableAssociation"
+  routeTableId=(ref "RouteTableId")
+  subnetId=(ref "Subnet")
+  condition=(scopeId "RouteTableIsPopulated")
+}}
+
+

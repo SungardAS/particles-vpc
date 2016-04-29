@@ -1,136 +1,36 @@
 {{#layout}}
-  {{{parameter 'vpc_cidr' logicalId="VpcCidr"}}}
 
-  {{{set 'simple/create_vpc_security_group'}}}
-  {{{set 'simple/open_vpc_communication'}}}
-  {{{set 'simple/create_internet_gateway'}}}
+  {{!-- Shared Parameters --}}
 
-  {{{parameter 'name_tag' logicalId="NameTag"}}}
+  {{parameter 'name_tag' logicalId="NameTag"}}
 
-  {{#resource logicalId="Vpc"}}
-    "Type": "AWS::EC2::VPC",
+
+  {{!-- VPC --}}
+
+  {{parameter 'vpc_cidr' logicalId="VpcCidr"}}
+
+  {{#resource "vpc" logicalId="Vpc" cidr=(ref "VpcCidr")}}
     "Properties": {
-      "CidrBlock": {
-        "Ref": "VpcCidr"
-      },
       "InstanceTenancy": "default",
       "EnableDnsSupport": "true",
       "EnableDnsHostnames": "true",
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
+      "Tags": [{"Key": "Name", "Value": {{ref "NameTag"}} }]
     }
   {{/resource}}
 
-  {{#resource logicalId="InternetGateway"}}
-    "Type": "AWS::EC2::InternetGateway",
-    "Condition": "CreateInternetGatewayIsTrueCondition",
-    "Properties": {
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
-    }
-  {{/resource}}
+  {{set "vpc_all_outputs" vpcLogicalId="Vpc"}}
 
-  {{#resource logicalId="NetworkAcl"}}
-    "Type": "AWS::EC2::NetworkAcl",
-    "Properties": {
-      "VpcId": {
-        "Ref": "Vpc"
-      }
-    }
-  {{/resource}}
 
-  {{#resource logicalId="RouteTable"}}
-    "Type": "AWS::EC2::RouteTable",
-    "Properties": {
-      "VpcId": {
-        "Ref": "Vpc"
-      },
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
-    }
-  {{/resource}}
+  {{!-- Internet Gateway --}}
 
-  {{#resource logicalId="VpcSecurityGroup"}}
-    "Type": "AWS::EC2::SecurityGroup",
-    "Condition": "CreateVpcSecurityGroupIsTrueCondition",
-    "Properties": {
-      "GroupDescription": "VPC Default Security Group",
-      "VpcId": {
-        "Ref": "Vpc"
-      },
-      "SecurityGroupEgress": [
-        {
-          "IpProtocol": "-1",
-          "CidrIp": "0.0.0.0/0"
-        }
-      ],
-      "Tags": [
-        {
-          "Key": "Name",
-          "Value": {
-            "Ref": "NameTag"
-          }
-        }
-      ]
-    }
-  {{/resource}}
+  {{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway"}}
 
-  {{#resource logicalId="SecurityGroupIngress"}}
-    "Type": "AWS::EC2::SecurityGroupIngress",
-    "Condition": "OpenVpcCommunicationIsTrueCondition",
+  {{#resource "internet_gateway"
+    logicalId="InternetGateway"
+    condition="CreateInternetGatewayIsTrueCondition"
+  }}
     "Properties": {
-      "GroupId": {
-        "Fn::GetAtt": ["VpcSecurityGroup","GroupId"]
-      },
-      "IpProtocol": "-1",
-      "SourceSecurityGroupId": {
-        "Fn::GetAtt": ["VpcSecurityGroup","GroupId"]
-      }
-    }
-  {{/resource}}
-
-  {{#resource logicalId="Acl1"}}
-    "Type": "AWS::EC2::NetworkAclEntry",
-    "Properties": {
-      "CidrBlock": "0.0.0.0/0",
-      "Egress": true,
-      "Protocol": "-1",
-      "RuleAction": "allow",
-      "RuleNumber": "100",
-      "NetworkAclId": {
-        "Ref": "NetworkAcl"
-      }
-    }
-  {{/resource}}
-
-  {{#resource logicalId="Acl2"}}
-    "Type": "AWS::EC2::NetworkAclEntry",
-    "Properties": {
-      "CidrBlock": "0.0.0.0/0",
-      "Protocol": "-1",
-      "RuleAction": "allow",
-      "RuleNumber": "100",
-      "NetworkAclId": {
-        "Ref": "NetworkAcl"
-      }
+      "Tags": [{"Key": "Name", "Value": {{ref "NameTag"}} }]
     }
   {{/resource}}
 
@@ -138,47 +38,33 @@
     "Type": "AWS::EC2::VPCGatewayAttachment",
     "Condition": "CreateInternetGatewayIsTrueCondition",
     "Properties": {
-      "VpcId": {
-        "Ref": "Vpc"
-      },
-      "InternetGatewayId": {
-        "Ref": "InternetGateway"
-      }
+      "VpcId": {{ref "Vpc"}},
+      "InternetGatewayId": {{ref "InternetGateway"}}
     }
   {{/resource}}
 
-  {{#resource logicalId="DefaultRoute"}}
+  {{#resource logicalId="PublicRouteTable"}}
+    "Type": "AWS::EC2::RouteTable",
+    "Properties": {
+      "VpcId": {{ref "Vpc"}},
+      "Tags": [
+        {"Key": "Name", "Value": {{ref "NameTag"}} },
+        {"Key": "Network", "Value": "Public"}
+      ]
+    }
+  {{/resource}}
+
+  {{#resource logicalId="PublicRoute"}}
     "Type": "AWS::EC2::Route",
     "Condition": "CreateInternetGatewayIsTrueCondition",
     "Properties": {
       "DestinationCidrBlock": "0.0.0.0/0",
-      "RouteTableId": {
-        "Ref": "RouteTable"
-      },
-      "GatewayId": {
-        "Ref": "InternetGateway"
-      }
-    },
-    "DependsOn": "InternetGateway"
+      "RouteTableId": {{ref "PublicRouteTable"}},
+      "GatewayId": {{ref "InternetGateway"}}
+    }
   {{/resource}}
 
-  {{#output logicalId="VpcId"}}
-    "Value": {
-      "Ref": "Vpc"
-    }
-  {{/output}}
+  {{output "m:core" "base" logicalId="PublicRouteTableId" value=(ref "PublicRouteTable")}}
 
-  {{#output logicalId="RouteTableId"}}
-    "Value": {
-      "Ref": "RouteTable"
-    }
-  {{/output}}
-
-  {{#output logicalId="SecurityGroupId"}}
-    "Value": {
-      "Ref": "VpcSecurityGroup"
-    },
-    "Condition": "CreateVpcSecurityGroupIsTrueCondition"
-  {{/output}}
 
 {{/layout}}

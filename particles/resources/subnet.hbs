@@ -1,0 +1,9 @@
+{{#resource "m:core" "base"
+  type="AWS::EC2::Subnet"
+}}
+"Properties": {
+  "CidrBlock": {{helper "m:core" "propertyValue" cidrBlock}},
+  "AvailabilityZone": {{helper "m:core" "propertyValue" availabilityZone}},
+  "VpcId": {{helper "m:core" "propertyValue" vpcId}}
+}
+{{/resource}}

@@ -1,0 +1,7 @@
+{{#resource "m:core" "base"
+  type="AWS::EC2::NetworkAcl"
+}}
+  "Properties": {
+  "VpcId": {{helper "m:core" "propertyValue" vpcId}}
+  }
+{{/resource}}
