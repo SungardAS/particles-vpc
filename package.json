@@ -6,7 +6,10 @@
   },
   "description": "Condensation particles for AWS VPC",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "build": "./node_modules/.bin/gulp condensation:build",
+    "deploy": "./node_modules/.bin/gulp condensation:deploy",
+    "gulp": "./node_modules/.bin/gulp"
   },
   "author": {
     "name": "Kevin McGrath",
@@ -20,6 +23,15 @@
     "type": "git",
     "url": "https://github.com/sungardas/particles-vpc.git"
   },
+  "keywords": [
+    "condensation-particles",
+    "condensation",
+    "cloudformation",
+    "cloud",
+    "formation",
+    "aws",
+    "vpc"
+  ],
   "license": "Apache-2.0",
   "dependencies": {
     "condensation": "^0.5.0",
