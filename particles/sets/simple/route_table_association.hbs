@@ -1,0 +1,10 @@
+{{!-- Route Table Association--}}
+
+{{parameter "route_table_id" logicalId="RouteTableId"}}
+
+{{
+  resource "route_table_association"
+  logicalId="RouteTableAssociation"
+  routeTableId=(ref "RouteTableId")
+  subnetId=(ref "Subnet")
+}}
