@@ -3,7 +3,7 @@ var CondensationTests = require("condensation-particle-tests");
 
 var cTests = new CondensationTests();
 
-describe.only("parameters", function() {
+describe("parameters", function() {
   describe("vpc", function() {
     describe("id", function() {
       it("creates the parameter", function() {
