@@ -4,6 +4,8 @@
 
 [![NPM][npm-image]][npm-url]
 [![Gitter][gitter-image]][gitter-url]
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][daviddm-image]][daviddm-url]
 
 
 ## Summary
@@ -40,3 +42,7 @@
 [npm-url]: https://npmjs.org/package/particles-vpc
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/SungardAS/condensation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+[travis-image]: https://travis-ci.org/SungardAS/particles-vpc.svg?branch=master
+[travis-url]: https://travis-ci.org/SungardAS/particles-vpc
+[daviddm-image]: https://david-dm.org/SungardAS/particles-vpc.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/SungardAS/particles-vpc
