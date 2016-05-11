@@ -3,7 +3,7 @@ var CondensationTests = require("condensation-particle-tests");
 
 var cTests = new CondensationTests();
 
-describe.only("resources", function() {
+describe("resources", function() {
   describe("route_table_association", function() {
     it("creates the resource with strings", function() {
       cTests.testParticle(

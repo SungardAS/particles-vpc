@@ -3,7 +3,7 @@ var CondensationTests = require("condensation-particle-tests");
 
 var cTests = new CondensationTests();
 
-describe.only("resources", function() {
+describe("resources", function() {
   describe("network_acl", function() {
     it("creates the resource with VpcId string", function() {
       cTests.testParticle(
