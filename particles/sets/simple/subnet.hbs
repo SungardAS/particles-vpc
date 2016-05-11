@@ -6,6 +6,7 @@
   logicalId="AvailabilityZone"
   default=defaultAvailabilityZone
   description="Valid availability zone for the region.  Leave blank to have AWS automatically assign."
+  optional=true
 }}
 
 {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "AvailabilityZone")}}
