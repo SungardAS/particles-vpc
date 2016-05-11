@@ -1,6 +1,6 @@
   {{!-- VPC --}}
 
-  {{parameter 'vpc_cidr' logicalId="VpcCidr" default=defaultCidr}}
+  {{parameter 'vpc/cidr' logicalId="VpcCidr" default=defaultCidr}}
 
   {{#resource "vpc" logicalId="Vpc" cidr=(ref "VpcCidr")}}
     "Properties": {
