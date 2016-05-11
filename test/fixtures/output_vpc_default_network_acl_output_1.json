@@ -1,0 +1,11 @@
+{
+  "VpcDefaultNetworkAcl": {
+    "Description": "The default network ACL ID that is associated with the VPC",
+    "Value": {
+      "Fn::GetAtt": [
+        "Vpc",
+        "DefaultNetworkAcl"
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "SubnetAZ": {
+    "Description": "Availability Zone for the Subnet",
+    "Value": {
+      "Fn::GetAtt": [
+        "Subnet1",
+        "AvailabilityZone"
+      ]
+    }
+  }
+}

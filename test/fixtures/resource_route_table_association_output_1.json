@@ -1,0 +1,9 @@
+{
+  "RouteTableAssociation": {
+    "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    "Properties": {
+      "RouteTableId": "RouteTable",
+      "SubnetId": "Subnet1"
+    }
+  }
+}

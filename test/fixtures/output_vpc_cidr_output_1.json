@@ -1,0 +1,11 @@
+{
+  "VpcCidrBlock": {
+    "Description": "The set of IP addresses for the VPC",
+    "Value": {
+      "Fn::GetAtt": [
+        "Vpc",
+        "CidrBlock"
+      ]
+    }
+  }
+}
