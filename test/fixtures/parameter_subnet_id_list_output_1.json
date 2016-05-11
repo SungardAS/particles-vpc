@@ -1,0 +1,5 @@
+{
+  "SubnetIdList": {
+    "Type": "List<AWS::EC2::Subnet::Id>"
+  }
+}
