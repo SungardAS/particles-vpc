@@ -1,0 +1,9 @@
+{
+  "RouteTableId": {
+    "Type": "String",
+    "AllowedPattern": "rtb-[a-zA-Z0-9]*",
+    "ConstraintDescription": "Must be valid route table id format rtb-[a-zA-Z0-9]*",
+    "Description": "Route table that the subnet will attach to.",
+    "MinLength": "4"
+  }
+}

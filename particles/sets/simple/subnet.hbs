@@ -1,6 +1,13 @@
 {{!-- Subnet --}}
-{{parameter "m:core" "cidr_range" logicalId="SubnetCidr"}}
-{{parameter "availability_zone" logicalId="AvailabilityZone"}}
+{{parameter "m:core" "cidr_range" logicalId="SubnetCidr" default=defaultCidr}}
+
+{{
+  parameter "availability_zone"
+  logicalId="AvailabilityZone"
+  default=defaultAvailabilityZone
+  description="Valid availability zone for the region.  Leave blank to have AWS automatically assign."
+  optional=true
+}}
 
 {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "AvailabilityZone")}}
 
@@ -13,7 +20,7 @@
   "Properties": {
     "AvailabilityZone": {
       "Fn::If": [
-        "{{scopeId "AvailabilityZoneIsPopulated"}}",
+        "{{concat (scopeId "AvailabilityZone") "IsPopulated"}}",
         {{ref "AvailabilityZone"}},
         {"Ref": "AWS::NoValue"}
       ]
@@ -21,10 +28,11 @@
   }
 {{/resource}}
 
-{{set "subnet_all_outputs" subnetLogicalId=(scopeId "Subnet")}}
+{{set "subnet/all_outputs" subnetLogicalId=(scopeId "Subnet")}}
 
 
 {{!-- Route Table --}}
+{{!--  This is probably not needed for a simple subnet. Will be associated with the default route for the VPC on creation
 {{parameter "route_table_id" logicalId="RouteTableId"}}
 
 {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "RouteTableId")}}
@@ -34,7 +42,8 @@
   logicalId="RouteTableAssociation"
   routeTableId=(ref "RouteTableId")
   subnetId=(ref "Subnet")
-  condition=(scopeId "RouteTableIdIsPopulated")
+  condition=(concat (scopeId "RouteTableId") "IsPopulated")
 }}
+--}}
 
 

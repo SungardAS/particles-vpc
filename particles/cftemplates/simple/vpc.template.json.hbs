@@ -1,70 +1,7 @@
 {{#layout}}
 
-  {{!-- Shared Parameters --}}
+  {{parameter "name_tag" logicalId="NameTag"}}
 
-  {{parameter 'name_tag' logicalId="NameTag"}}
-
-
-  {{!-- VPC --}}
-
-  {{parameter 'vpc_cidr' logicalId="VpcCidr"}}
-
-  {{#resource "vpc" logicalId="Vpc" cidr=(ref "VpcCidr")}}
-    "Properties": {
-      "InstanceTenancy": "default",
-      "EnableDnsSupport": "true",
-      "EnableDnsHostnames": "true",
-      "Tags": [{"Key": "Name", "Value": {{ref "NameTag"}} }]
-    }
-  {{/resource}}
-
-  {{set "vpc_all_outputs" vpcLogicalId="Vpc"}}
-
-
-  {{!-- Internet Gateway --}}
-
-  {{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway"}}
-
-  {{#resource "internet_gateway"
-    logicalId="InternetGateway"
-    condition="CreateInternetGatewayIsTrueCondition"
-  }}
-    "Properties": {
-      "Tags": [{"Key": "Name", "Value": {{ref "NameTag"}} }]
-    }
-  {{/resource}}
-
-  {{#resource logicalId="GatewayAttachment"}}
-    "Type": "AWS::EC2::VPCGatewayAttachment",
-    "Condition": "CreateInternetGatewayIsTrueCondition",
-    "Properties": {
-      "VpcId": {{ref "Vpc"}},
-      "InternetGatewayId": {{ref "InternetGateway"}}
-    }
-  {{/resource}}
-
-  {{#resource logicalId="PublicRouteTable"}}
-    "Type": "AWS::EC2::RouteTable",
-    "Properties": {
-      "VpcId": {{ref "Vpc"}},
-      "Tags": [
-        {"Key": "Name", "Value": {{ref "NameTag"}} },
-        {"Key": "Network", "Value": "Public"}
-      ]
-    }
-  {{/resource}}
-
-  {{#resource logicalId="PublicRoute"}}
-    "Type": "AWS::EC2::Route",
-    "Condition": "CreateInternetGatewayIsTrueCondition",
-    "Properties": {
-      "DestinationCidrBlock": "0.0.0.0/0",
-      "RouteTableId": {{ref "PublicRouteTable"}},
-      "GatewayId": {{ref "InternetGateway"}}
-    }
-  {{/resource}}
-
-  {{output "m:core" "base" logicalId="PublicRouteTableId" value=(ref "PublicRouteTable")}}
-
+  {{set "simple/vpc" nameTag=(ref "NameTag")}}
 
 {{/layout}}

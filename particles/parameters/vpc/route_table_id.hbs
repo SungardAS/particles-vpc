@@ -1,0 +1,8 @@
+{{
+  parameter "m:core" "base"
+  description="Route table that the subnet will attach to."
+  type="String"
+  minLength="4"
+  allowedPattern="rtb-[a-zA-Z0-9]*"
+  constraintDescription="Must be valid route table id format rtb-[a-zA-Z0-9]*"
+}}
