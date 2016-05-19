@@ -6,8 +6,8 @@
     "Properties": {
       "InstanceTenancy": "default",
       "EnableDnsSupport": "true",
-      "EnableDnsHostnames": "true",
-      "Tags": [{"Key": "Name", "Value": {{nameTag}} }]
+      "EnableDnsHostnames": "true"
+      {{#if nameTag}},"Tags": [{"Key": "Name", "Value": {{helper "m:core" "propertyValue" nameTag}} }]{{/if}}
     }
   {{/resource}}
 
@@ -23,7 +23,7 @@
     condition="CreateInternetGatewayIsTrueCondition"
   }}
     "Properties": {
-      "Tags": [{"Key": "Name", "Value": {{nameTag}} }]
+      {{#if nameTag}}"Tags": [{"Key": "Name", "Value": {{helper "m:core" "propertyValue" nameTag}} }]{{/if}}
     }
   {{/resource}}
 
@@ -41,7 +41,7 @@
     "Properties": {
       "VpcId": {{ref "Vpc"}},
       "Tags": [
-        {"Key": "Name", "Value": {{nameTag}} },
+        {{#if nameTag}}{"Key": "Name", "Value": {{nameTag}} },{{/if}}
         {"Key": "Network", "Value": "Public"}
       ]
     }

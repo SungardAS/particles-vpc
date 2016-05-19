@@ -31,19 +31,6 @@
 {{set "subnet/all_outputs" subnetLogicalId=(scopeId "Subnet")}}
 
 
-{{!-- Route Table --}}
-{{!--  This is probably not needed for a simple subnet. Will be associated with the default route for the VPC on creation
-{{parameter "route_table_id" logicalId="RouteTableId"}}
 
-{{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "RouteTableId")}}
-
-{{
-  resource "route_table_association"
-  logicalId="RouteTableAssociation"
-  routeTableId=(ref "RouteTableId")
-  subnetId=(ref "Subnet")
-  condition=(concat (scopeId "RouteTableId") "IsPopulated")
-}}
---}}
 
 
