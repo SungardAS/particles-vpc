@@ -6,10 +6,10 @@
 
   {{set "simple/subnet" nameTag=(ref "NameTag") vpcId=(ref "VpcId") }}
 
-  {{parameter "route_table_id" logicalId="RouteTableId"}}
+  {{parameter "vpc/route_table_id" logicalId="RouteTableId"}}
   {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "RouteTableId")}}
   {{
-    resource "route_table_association"
+    resource "subnet/route_table_association"
     logicalId="RouteTableAssociation"
     routeTableId=(ref "RouteTableId")
     subnetId=(ref "Subnet")
