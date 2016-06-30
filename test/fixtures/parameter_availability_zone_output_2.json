@@ -1,8 +1,6 @@
 {
   "AvailabilityZone": {
-    "Type": "String",
-    "AllowedPattern": "([a-z]{2}-[a-z]+-\\d[a-z])?",
-    "ConstraintDescription": "Must match [a-z]{2}-[a-z]-\\d[a-z]",
+    "Type": "AWS::EC2::AvailabilityZone::Name",
     "Description": "[optional] Availability Zone"
   }
 }
