@@ -1,0 +1,13 @@
+{{#resource "m:core" "base" type="AWS::EC2::SecurityGroupIngress"}}
+"Properties": {
+  "FromPort": {{helper "m:core" "propertyValue" fromPort forceNumber=true}},
+  "IpProtocol": {{helper "m:core" "propertyValue" ipProtocol}},
+  "ToPort": {{helper "m:core" "propertyValue" toPort forceNumber=true}}
+  {{#if cidrIp}},"CidrIp": {{helper "m:core" "propertyValue" cidrIp}}{{/if}}
+  {{#if groupId}},"GroupId": {{helper "m:core" "propertyValue" groupId}}{{/if}}
+  {{#if groupName}},"GroupName": {{helper "m:core" "propertyValue" groupName}}{{/if}}
+  {{#if sourceSecurityGroupName}},"SourceSecurityGroupName": {{helper "m:core" "propertyValue" sourceSecurityGroupName}}{{/if}}
+  {{#if sourceSecurityGroupId}},"SourceSecurityGroupId": {{helper "m:core" "propertyValue" sourceSecurityGroupId}}{{/if}}
+  {{#if sourceSecurityGroupOwnerId}},"SourceSecurityGroupOwnerId": {{helper "m:core" "propertyValue" sourceSecurityGroupOwnerId}}{{/if}}
+}
+{{/resource}}
