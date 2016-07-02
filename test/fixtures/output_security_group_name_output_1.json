@@ -1,0 +1,8 @@
+{
+  "SecurityGroupName": {
+    "Description": "Group Name for SecurityGroup",
+    "Value": {
+      "Ref": "SecurityGroup"
+    }
+  }
+}

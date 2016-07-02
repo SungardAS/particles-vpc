@@ -1,0 +1,11 @@
+{
+  "SecurityGroupId": {
+    "Description": "Group ID for SecurityGroup",
+    "Value": {
+      "Fn::GetAtt": [
+        "SecurityGroup",
+        "GroupId"
+      ]
+    }
+  }
+}
