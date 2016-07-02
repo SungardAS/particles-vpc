@@ -1,0 +1,11 @@
+{
+  "VpcDefaultSecurityGroup": {
+    "Value": {
+      "Fn::GetAtt": [
+        "Vpc",
+        "DefaultSecurityGroup"
+      ]
+    }
+  }
+}
+

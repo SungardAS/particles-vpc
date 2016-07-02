@@ -1,8 +1,8 @@
 {
   "name": "particles-vpc",
-  "version": "0.5.0-rc9",
+  "version": "0.5.0",
   "publishConfig": {
-    "tag": "rc"
+    "tag": "latest"
   },
   "description": "Condensation particles for AWS VPC",
   "scripts": {
