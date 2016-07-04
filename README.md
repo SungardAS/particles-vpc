@@ -18,17 +18,170 @@
 
 #### simple/subnet
 
+Simple implemention of a Subnet.  Good base to start from.
+
 #### simple/vpc
 
-### conditions
+Simple implemention of a VPC.  Good base to start from.
 
 ### outputs
 
+#### security\_group/id
+
+Output ID of a SecurityGroup
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `securityGroupLogicalId {String}` **required** LogicalId of the
+    SecurityGroup
+
+#### security\_group/name
+
+Output Name of a SecurityGroup
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `securityGroupLogicalId {String}` **required** LogicalId of the
+    SecurityGroup
+
 ### parameters
 
-### partials
+#### availability\_zone/name
+
+Name for an AvailabilityZone
+
+**Extends** `base` from `particles-core`
+
+#### availability\_zone/id
+
+ID for an AvailabilityZone
+
+**Extends** `base` from `particles-core`
+
+#### security\_group/id\_list
+
+ID List for SecurityGroups
+
+**Extends** `base` from `particles-core`
+
+#### subnet/id\_list
+
+ID List for Subnets
+
+**Extends** `base` from `particles-core`
+
+#### vpc/cidr
+
+CIDR range
+
+**Extends** `cidr_range` from `particles-core`
+
+#### vpc/id
+
+ID for a VPC
+
+**Extends** `base` from `particles-core`
+
+#### vpc/route\_table\_id
+
+ID for a VPC RouteTable
+
+**Extends** `base` from `particles-core`
 
 ### resources
+
+#### security\_group/egress
+
+**Type** AWS::EC2::SecurityGroupEgress
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `fromPort {String}` **required** Start of port range for the TCP and UDP protocols, or an ICMP type number
+  * `groupId {String}` **required** ID of the Amazon VPC security group to modify
+  * `ipProtocol {String}` **required** IP protocol name or number
+  * `toPort {String}` **required** End of port range for the TCP and UDP protocols, or an ICMP code
+  * `cidrIp {String}` cidr range
+  * `destinationSecurityGroupId {String}` group ID of the destination Amazon VPC security group
+
+#### security\_group/ingress
+
+**Type** AWS::EC2::SecurityGroupIngress
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `fromPort {Number}` **required** Start of port range for the TCP and UDP protocols, or an ICMP type number
+  * `ipProtocol {String}` **required** IP protocol name or number
+  * `toPort {Number}` **required** End of port range for the TCP and UDP protocols, or an ICMP code
+  * `cidrIp {String}` cidr range
+  * `groupId {String}` ID of the Amazon VPC security group to modify
+  * `groupName {String}` Name of the Amazon VPC security group to modify
+  * `sourceSecurityGroupId {String}` group ID of the destination Amazon VPC security group
+  * `sourceSecurityGroupName {String}` group name of the destination Amazon VPC security group
+  * `sourceSecurityGroupOwnerId {String}` AWS Account ID of the owner of the Amazon EC2 security group specified in the SourceSecurityGroupName property
+
+#### subnet/route\_table\_association
+
+**Type** AWS::EC2::SubnetRouteTableAssociation
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `RouteTableId {String}` **required** The ID of the route table
+  * `SubnetId {String}` **required** The ID of the subnet
+
+#### internet\_gateway
+
+**Type** AWS::EC2::InternetGateway
+
+**Extends** `base` from `particles-core`
+
+#### network\_acl
+
+**Type** AWS::EC2::NetworkAcl
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `vpcId {String}` **required** The ID of the VPC
+  * `tags {Array}` An arbitrary set of tags
+
+#### security\_group
+
+**Type** AWS::EC2::SecurityGroup
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `groupDescription {String}` **required** Description of the security group
+  * `vpcId {String}` **required** The physical ID of the VPC
+  * `securityGroupEgress {Array}` A list of Amazon EC2 security group egress rules
+  * `securityGroupIngress {Array}` A list of Amazon EC2 security group ingress rules
+  * `tags {Array}` An arbitrary set of tags
+
+#### security\_group
+
+**Type** AWS::EC2::Subnet
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `cidrBlock {String}` **required** The CIDR block you want the VPC to cover
+  * `enableDnsSupport {Boolean}` whether DNS resolution is supported for the VPC
+  * `enableDnsHostnames {Boolean}` whether the instances launched in the VPC get DNS hostnames
+  * `instanceTenancy {String}` tenancy of instances launched into the VPC
+  * `tags {Array}` An arbitrary set of tags
 
 ## Ready To Launch
 

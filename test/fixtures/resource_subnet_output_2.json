@@ -1,0 +1,13 @@
+{
+  "Subnet": {
+    "Properties": {
+      "AvailabilityZone": "us-east-1a",
+      "CidrBlock": "10.0.0.0/24",
+      "MapPublicIpOnLaunch": "false",
+      "VpcId": {
+        "Ref": "Vpc"
+      }
+    },
+    "Type": "AWS::EC2::Subnet"
+  }
+}

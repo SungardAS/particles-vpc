@@ -1,13 +1,14 @@
 {{#resource "m:core" "base" type="AWS::EC2::SecurityGroupIngress"}}
-"Properties": {
-  "FromPort": {{helper "m:core" "propertyValue" fromPort forceNumber=true}},
-  "IpProtocol": {{helper "m:core" "propertyValue" ipProtocol}},
-  "ToPort": {{helper "m:core" "propertyValue" toPort forceNumber=true}}
-  {{#if cidrIp}},"CidrIp": {{helper "m:core" "propertyValue" cidrIp}}{{/if}}
-  {{#if groupId}},"GroupId": {{helper "m:core" "propertyValue" groupId}}{{/if}}
-  {{#if groupName}},"GroupName": {{helper "m:core" "propertyValue" groupName}}{{/if}}
-  {{#if sourceSecurityGroupName}},"SourceSecurityGroupName": {{helper "m:core" "propertyValue" sourceSecurityGroupName}}{{/if}}
-  {{#if sourceSecurityGroupId}},"SourceSecurityGroupId": {{helper "m:core" "propertyValue" sourceSecurityGroupId}}{{/if}}
-  {{#if sourceSecurityGroupOwnerId}},"SourceSecurityGroupOwnerId": {{helper "m:core" "propertyValue" sourceSecurityGroupOwnerId}}{{/if}}
+  {{#helper "m:core" "properties"}}
+    {{helper "m:core" "propertyValue" "FromPort" type="number"}}
+    {{helper "m:core" "propertyValue" "IpProtocol"}}
+    {{helper "m:core" "propertyValue" "ToPort" type="number"}}
+    {{helper "m:core" "propertyValue" "CidrIp" optional=true}}
+    {{helper "m:core" "propertyValue" "GroupId" optional=true}}
+    {{helper "m:core" "propertyValue" "GroupName" optional=true}}
+    {{helper "m:core" "propertyValue" "SourceSecurityGroupName" optional=true}}
+    {{helper "m:core" "propertyValue" "SourceSecurityGroupId" optional=true}}
+    {{helper "m:core" "propertyValue" "SourceSecurityGroupOwnerId" optional=true}}
+  {{/helper}}
 }
 {{/resource}}

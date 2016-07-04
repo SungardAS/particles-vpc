@@ -1,9 +1,9 @@
 {{#resource "m:core" "base" type="AWS::EC2::SecurityGroup"}}
-"Properties": {
-  "GroupDescription": {{helper "m:core" "propertyValue" groupDescription}},
-  "VpcId": {{helper "m:core" "propertyValue" vpcId}}
-  {{#if securityGroupEgress}},"SecurityGroupEgress": {{helper "m:core" "propertyValue" securityGroupEgress}}{{/if}}
-  {{#if securityGroupIngress}},"SecurityGroupIngress": {{helper "m:core" "propertyValue" securityGroupIngress}}{{/if}}
-  {{#if tags}},"Tags": {{helper "m:core" "propertyValue" tags}}{{/if}}
-}
+  {{#helper "m:core" "properties"}}
+    {{helper "m:core" "property" "GroupDescription"}}
+    {{helper "m:core" "property" "VpcId"}}
+    {{helper "m:core" "property" "SecurityGroupEgress" optional=true}}
+    {{helper "m:core" "property" "SecurityGroupIngress" optional=true}}
+    {{helper "m:core" "property" "Tags" optional=true}}
+  {{/helper}}
 {{/resource}}

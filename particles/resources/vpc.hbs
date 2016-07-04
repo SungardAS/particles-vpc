@@ -1,6 +1,9 @@
-{{#resource "m:core" "base" logicalId="Vpc"}}
-  "Type": "AWS::EC2::VPC",
-  "Properties": {
-    "CidrBlock": {{"helper" "m:core" "propertyValue"  cidr}}
-  }
+{{#resource "m:core" "base" type="AWS::EC2::VPC"}}
+  {{#helper "m:core" "properties"}}
+    {{helper "m:core" "property" "CidrBlock"}}
+    {{helper "m:core" "property" "EnableDnsSupport" optional=true}}
+    {{helper "m:core" "property" "EnableDnsHostnames" optional=true}}
+    {{helper "m:core" "property" "InstanceTenancy" optional=true}}
+    {{helper "m:core" "property" "Tags" optional=true}}
+  {{/helper}}
 {{/resource}}
