@@ -291,7 +291,8 @@ Ready to Launch community available templates created from condensation particle
 
 Apache-2.0 ©
 
-## [![Sungard Availability Services | Labs][labs-logo]][labs-github-url]
+## Sungard Availability Services | Labs
+[![Sungard Availability Services | Labs][labs-logo]][labs-github-url]
 
 This project is maintained by the Labs team at [Sungard Availability
 Services](http://sungardas.com)
