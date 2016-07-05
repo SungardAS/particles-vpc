@@ -39,7 +39,7 @@
     "config": "^1.21.0",
     "git-rev-sync": "^1.6.0",
     "gulp": "^3.9.1",
-    "particles-core": "^0.4.4"
+    "particles-core": "sungardas/particles-core#develop"
   },
   "devDependencies": {
     "condensation-particle-tests": "^0.5.2",
