@@ -94,6 +94,37 @@ ID for a VPC RouteTable
 
 ### resources
 
+#### internet\_gateway
+
+**Type** AWS::EC2::InternetGateway
+
+**Extends** `base` from `particles-core`
+
+#### network\_acl
+
+**Type** AWS::EC2::NetworkAcl
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `vpcId {String}` **required** The ID of the VPC
+  * `tags {Array}` An arbitrary set of tags
+
+#### security\_group
+
+**Type** AWS::EC2::SecurityGroup
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `groupDescription {String}` **required** Description of the security group
+  * `vpcId {String}` **required** The physical ID of the VPC
+  * `securityGroupEgress {Array}` A list of Amazon EC2 security group egress rules
+  * `securityGroupIngress {Array}` A list of Amazon EC2 security group ingress rules
+  * `tags {Array}` An arbitrary set of tags
+
 #### security\_group/egress
 
 **Type** AWS::EC2::SecurityGroupEgress
@@ -127,6 +158,20 @@ ID for a VPC RouteTable
   * `sourceSecurityGroupName {String}` group name of the destination Amazon VPC security group
   * `sourceSecurityGroupOwnerId {String}` AWS Account ID of the owner of the Amazon EC2 security group specified in the SourceSecurityGroupName property
 
+#### subnet
+
+**Type** AWS::EC2::Subnet
+
+**Extends** `base` from `particles-core`
+
+**Parameters**
+
+  * `cidrBlock {String}` **required** CIDR block that you want the subnet to cover
+  * `availabilityZone {String}` **required** availability zone in which you want the subnet
+  * `vpcId {String}` **required** VPC on which you want to create the subnet
+  * `mapPublicIpOnLaunch {Boolean=false}` whether instances that are launched in this subnet receive a public IP address
+  * `tags {Array}` An arbitrary set of tags
+
 #### subnet/route\_table\_association
 
 **Type** AWS::EC2::SubnetRouteTableAssociation
@@ -138,40 +183,10 @@ ID for a VPC RouteTable
   * `RouteTableId {String}` **required** The ID of the route table
   * `SubnetId {String}` **required** The ID of the subnet
 
-#### internet\_gateway
 
-**Type** AWS::EC2::InternetGateway
+#### vpc
 
-**Extends** `base` from `particles-core`
-
-#### network\_acl
-
-**Type** AWS::EC2::NetworkAcl
-
-**Extends** `base` from `particles-core`
-
-**Parameters**
-
-  * `vpcId {String}` **required** The ID of the VPC
-  * `tags {Array}` An arbitrary set of tags
-
-#### security\_group
-
-**Type** AWS::EC2::SecurityGroup
-
-**Extends** `base` from `particles-core`
-
-**Parameters**
-
-  * `groupDescription {String}` **required** Description of the security group
-  * `vpcId {String}` **required** The physical ID of the VPC
-  * `securityGroupEgress {Array}` A list of Amazon EC2 security group egress rules
-  * `securityGroupIngress {Array}` A list of Amazon EC2 security group ingress rules
-  * `tags {Array}` An arbitrary set of tags
-
-#### security\_group
-
-**Type** AWS::EC2::Subnet
+**Type** AWS::EC2::Vpc
 
 **Extends** `base` from `particles-core`
 
@@ -180,10 +195,65 @@ ID for a VPC RouteTable
   * `cidrBlock {String}` **required** The CIDR block you want the VPC to cover
   * `enableDnsSupport {Boolean}` whether DNS resolution is supported for the VPC
   * `enableDnsHostnames {Boolean}` whether the instances launched in the VPC get DNS hostnames
-  * `instanceTenancy {String}` tenancy of instances launched into the VPC
-  * `tags {Array}` An arbitrary set of tags
+  * `instanceTenancy {String}` allowed tenancy of instances launched into the VPC
+  * `Tags {Array}` An arbitrary set of tags
+
+### sets
+
+#### security\_group/output\_all
+
+All possible outputs for a SecurityGroup
+
+**Parameters**
+
+  * `securityGroupLogicalId {String}` **required** The LogicalId of the SecurityGroup
+
+#### subnet\_group/output\_all
+
+All possible outputs for a Subnet
+
+**Parameters**
+
+  * `subnetLogicalId {String}` **required** The LogicalId of the Subnet
+
+#### vpc\_group/output\_all
+
+All possible outputs for a Vpc
+
+**Parameters**
+
+  * `vpcLogicalId {String}` **required** The LogicalId of the VPC
+
+#### simple/create\_internet\_gateway
+
+A `true_false` set for creation of an InternetGateway
+
+**Extends** `particles-core` `true_false`
+
+#### simple/route\_table\_association
+
+A RouteTableId parameter and a RouteTableAssociation resource
+
+#### simple/subnet
+
+A collection of particles that will create a simple, usable subnet.
+
+**Parameters**
+
+  * `defaultCidr {String}` the default CIDR range for the SubnetCidr parameter
+
+
+#### simple/vpc
+
+A collection of particles that will create a simple, usable vpc.
+
+**Parameters**
+
+  * `defaultCidr {String}` the default CIDR range for the VpcCidr parameter
 
 ## Ready To Launch
+
+An collection of particles that will create a simple, usable vpc.
 
 ### Simple VPC
 
