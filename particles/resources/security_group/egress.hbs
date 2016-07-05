@@ -1,6 +1,10 @@
-"CidrIp" : String,
-   "DestinationSecurityGroupId" : String,
-   "FromPort" : Integer,
-   "GroupId" : String,
-   "IpProtocol" : String,
-   "ToPort" : Integer
+{{#resource "m:core" "base" type="AWS::EC2::SecurityGroupEgress"}}
+  {{#helper "m:core" "properties"}}
+    {{helper "m:core" "property" "FromPort" type="number"}}
+    {{helper "m:core" "property" "GroupId"}}
+    {{helper "m:core" "property" "IpProtocol"}}
+    {{helper "m:core" "property" "ToPort" type="number"}}
+    {{helper "m:core" "property" "CidrIp" optional=true}}
+    {{helper "m:core" "property" "DestinationSecurityGroupId" optional=true}}
+  {{/helper}}
+{{/resource}}

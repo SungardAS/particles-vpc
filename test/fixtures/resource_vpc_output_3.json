@@ -1,0 +1,16 @@
+{
+  "Vpc": {
+    "Properties": {
+      "CidrBlock": {
+        "Ref": "CidrBlock"
+      },
+      "Tags": [
+        {
+          "tag1": "tag1"
+        }
+      ]
+    },
+    "Type": "AWS::EC2::VPC"
+  }
+}
+

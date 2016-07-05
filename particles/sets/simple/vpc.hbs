@@ -2,7 +2,7 @@
 
   {{parameter 'vpc/cidr' logicalId="VpcCidr" default=defaultCidr}}
 
-  {{#resource "vpc" logicalId="Vpc" cidr=(ref "VpcCidr")}}
+  {{#resource "vpc" logicalId="Vpc" cidrBlock=(ref "VpcCidr")}}
     "Properties": {
       "InstanceTenancy": "default",
       "EnableDnsSupport": "true",
@@ -11,7 +11,7 @@
     }
   {{/resource}}
 
-  {{set "vpc/all_outputs" vpcLogicalId="Vpc"}}
+  {{set "vpc/output_all" vpcLogicalId="Vpc"}}
 
 
   {{!-- Internet Gateway --}}

@@ -4,11 +4,11 @@ mapPublicIpOnLaunch: false
 {{#resource "m:core" "base"
   type="AWS::EC2::Subnet"
 }}
-"Properties": {
-  "CidrBlock": {{helper "m:core" "propertyValue" cidrBlock}},
-  "AvailabilityZone": {{helper "m:core" "propertyValue" availabilityZone}},
-  "VpcId": {{helper "m:core" "propertyValue" vpcId}},
-  "MapPublicIpOnLaunch": {{helper "m:core" "propertyValue" mapPublicIpOnLaunch}}
-  {{#if tags}},"Tags": {{helper "m:core" "propertyValue" tags}}{{/if}}
-}
+  {{#helper "m:core" "properties"}}
+    {{helper "m:core" "property" "CidrBlock"}}
+    {{helper "m:core" "property" "AvailabilityZone"}}
+    {{helper "m:core" "property" "VpcId"}}
+    {{helper "m:core" "property" "MapPublicIpOnLaunch"}}
+    {{helper "m:core" "property" "Tags" optional=true}}
+  {{/helper}}
 {{/resource}}
