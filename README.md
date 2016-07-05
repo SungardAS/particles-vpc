@@ -287,8 +287,22 @@ Ready to Launch community available templates created from condensation particle
 |sa-east-1|[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=sa-east-1#/stacks/new?stackName=lambda-formation-spotinst-lambda&templateURL=https://s3.amazonaws.com/condensation-particles.sa-east-1/particles-subnet/master/particles/cftemplates/subnet.template.json)|
 
 
-### Simple Subnet
+## License
 
+Apache-2.0 ©
+
+## [![Sungard Availability Services | Labs][labs-logo]][labs-github-url]
+
+This project is maintained by the Labs team at [Sungard Availability
+Services](http://sungardas.com)
+
+GitHub: [https://sungardas.github.io](https://sungardas.github.io)
+
+Blog:
+[http://blog.sungardas.com/CTOLabs/](http://blog.sungardas.com/CTOLabs/)
+
+[labs-github-url]: https://sungardas.github.io
+[labs-logo]: https://raw.githubusercontent.com/SungardAS/repo-assets/master/images/logos/sungardas-labs-logo-small.png
 [condensation-image]: https://raw.githubusercontent.com/SungardAS/condensation/master/docs/images/condensation_logo.png
 [condensation-url]: https://github.com/SungardAS/condensation
 [npm-image]: https://badge.fury.io/js/particles-vpc.svg
