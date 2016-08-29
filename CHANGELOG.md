@@ -3,6 +3,12 @@ All notable changes to this project will be documented here in
 accordance with [Keep a CHANGELOG][keep-changelog-url].
 This project adheres to [Semantic Versioning][semver-url].
 
+## UNRELEASED
+
+### Added
+- route resource particle
+- route\_table resource particle
+
 ## [0.5.0] - 2016-07-04
 
 ### Changed
