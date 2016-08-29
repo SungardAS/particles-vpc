@@ -1,0 +1,9 @@
+{
+  "Route": {
+    "Properties": {
+      "DestinationCidrBlock": "0.0.0.0/0",
+      "RouteTableId": "RouteTable"
+    },
+    "Type": "AWS::EC2::Route"
+  }
+}

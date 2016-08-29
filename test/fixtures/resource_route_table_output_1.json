@@ -1,0 +1,10 @@
+{
+  "RouteTable": {
+    "Properties": {
+      "VpcId": {
+        "Ref": "VpcId"
+      }
+    },
+    "Type": "AWS::EC2::RouteTable"
+  }
+}
