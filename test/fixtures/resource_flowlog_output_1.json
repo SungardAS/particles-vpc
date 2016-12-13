@@ -1,0 +1,22 @@
+{
+  "FlowLog": {
+     "Type": "AWS::EC2::FlowLog",
+     "Properties": {
+       "DeliverLogsPermissionArn": {
+         "Ref": "Arn"
+       },
+       "LogGroupName": {
+         "Ref": "Loggroupname"
+       },
+       "ResourceId": {
+         "Ref": "Resourceid"
+       },
+       "ResourceType": {
+         "Ref": "Resourcetype"
+       },
+       "TrafficType": {
+         "Ref": "Traffictype"
+       }
+     }
+   }
+}
