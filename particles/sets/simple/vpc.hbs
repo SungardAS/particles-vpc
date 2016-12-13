@@ -13,6 +13,22 @@
 
   {{set "vpc/output_all" vpcLogicalId="Vpc"}}
 
+  {{!-- FlowLog --}}
+
+  {{parameter "flowlogs/arn" logicalId="Arn"}}
+  {{parameter "flowlogs/loggroup" logicalId="Loggroupname"}}
+  {{parameter "flowlogs/resourceid" logicalId="Resourceid"}}
+  {{parameter "flowlogs/resourcetype" logicalId="Resourcetype"}}
+  {{parameter "flowlogs/traffictype" logicalId="Traffictype"}}
+  {{#resource "flowlog" logicalId="flowlog01"}}
+    "Properties": {
+      "DeliverLogsPermissionArn": {{ref "Arn"}},
+      "LogGroupName": {{ref "Loggroupname"}},
+      "ResourceId": {{ref "Resourceid"}},
+      "ResourceType": {{ref "Resourcetype"}},
+      "TrafficType": {{ref "Traffictype"}}
+    }
+  {{/resource}}
 
   {{!-- Internet Gateway --}}
 
