@@ -3,6 +3,15 @@ All notable changes to this project will be documented here in
 accordance with [Keep a CHANGELOG][keep-changelog-url].
 This project adheres to [Semantic Versioning][semver-url].
 
+## [0.6.0] - 2017-01-18
+
+### Changed
+- parameter names now follow the same naming convention
+- Outputs now extend particles-core "attribute" when needed
+
+### Removed
+- All resources - Replaced with particles-core 0.5.0 resource spec
+
 ## [0.5.2] - 2016-12-13
 
 ### Added
