@@ -3,7 +3,8 @@
 {{parameter "subnet/route_table_id" logicalId="RouteTableId"}}
 
 {{
-  resource "subnet/route_table_association"
+  resource "m:core" "spec"
+  type="AWS::EC2::SubnetRouteTableAssociation"
   logicalId="RouteTableAssociation"
   routeTableId=(ref "RouteTableId")
   subnetId=(ref "Subnet")

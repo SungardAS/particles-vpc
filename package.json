@@ -1,6 +1,6 @@
 {
   "name": "particles-vpc",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "publishConfig": {
     "tag": "latest"
   },
@@ -35,14 +35,14 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "condensation": "^0.5.6",
+    "condensation": "^0.6.1",
     "config": "^1.21.0",
     "git-rev-sync": "^1.6.0",
     "gulp": "^3.9.1",
-    "particles-core": "^0.4.5"
+    "particles-core": "^0.5.0"
   },
   "devDependencies": {
-    "condensation-particle-tests": "^0.5.2",
+    "condensation-particle-tests": "^0.5.3",
     "mocha": "^2.5.3"
   }
 }

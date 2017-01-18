@@ -1,6 +1,8 @@
 ---
 description: Availability Zone for the Subnet
 ---
-{{#output "m:core" "base"}}
-  "Value": { "Fn::GetAtt" : [ "{{subnetLogicalId}}", "AvailabilityZone" ] }
-{{/output}}
+{{
+  output "m:core" "attribute"
+  resourceLogicalId=subnetLogicalId
+  attributeName="AvailabilityZone"
+}}

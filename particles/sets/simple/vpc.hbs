@@ -1,60 +1,81 @@
   {{!-- VPC --}}
 
-  {{parameter 'vpc/cidr' logicalId="VpcCidr" default=defaultCidr}}
+  {{parameter "vpc/cidr" logicalId="VpcCidr" default=defaultCidr}}
 
-  {{#resource "vpc" logicalId="Vpc" cidrBlock=(ref "VpcCidr")}}
-    "Properties": {
-      "InstanceTenancy": "default",
-      "EnableDnsSupport": "true",
-      "EnableDnsHostnames": "true"
-      {{#if nameTag}},"Tags": [{"Key": "Name", "Value": {{helper "m:core" "propertyValue" nameTag}} }]{{/if}}
-    }
-  {{/resource}}
+  {{
+    resource "m:core" "spec"
+    type="AWS::EC2::VPC"
+    logicalId="Vpc"
+    CidrBlock=(ref "VpcCidr")
+    InstanceTenancy=default
+    EnableDnsSupport="true"
+    EnableDnsHostnames="true"
+    Tags=(partial "name_tag")
+  }}
 
   {{set "vpc/output_all" vpcLogicalId="Vpc"}}
 
+  {{!-- FlowLog --}}
+
+  {{parameter "flowlogs/arn" logicalId="Arn"}}
+  {{parameter "flowlogs/log_group" logicalId="Loggroupname"}}
+  {{parameter "flowlogs/resource_id" logicalId="Resourceid"}}
+  {{parameter "flowlogs/resource_type" logicalId="Resourcetype"}}
+  {{parameter "flowlogs/traffic_type" logicalId="Traffictype"}}
+  {{
+    resource "m:core" "spec"
+    type="AWS::EC2::FlowLog"
+    logicalId="flowlog01"
+    DeliverLogsPermissionArn=(ref "Arn")
+    LogGroupName=(ref "Loggroupname")
+    ResourceId=(ref "Resourceid")
+    ResourceType=(ref "Resourcetype")
+    TrafficType=(ref "Traffictype")
+  }}
 
   {{!-- Internet Gateway --}}
 
   {{set 'simple/create_internet_gateway' parameterLogicalId="CreateInternetGateway"}}
 
-  {{#resource "internet_gateway"
+  {{
+    resource "m:core" "spec"
+    type="AWS::EC2::InternetGateway"
     logicalId="InternetGateway"
-    condition="CreateInternetGatewayIsTrueCondition"
+    condition=(scopeId "CreateInternetGatewayIsTrueCondition")
+    Tags=(arrayify (partial "name_tag"))
+  }}
+
+  {{
+    resource "m:core" "spec"
+    type="AWS::EC2::VPCGatewayAttachment"
+    logicalId="GatewayAttachment"
+    condition=(scopeId "CreateInternetGatewayIsTrueCondition")
+    VpcId=(ref "Vpc")
+    InternetGatewayId=(ref "InternetGateway")
+  }}
+
+  {{#resource "m:core" "spec"
+    type="AWS::EC2::RouteTable"
+    logicalId="PublicRouteTable"
+    VpcId=(ref "Vpc")
+    Tags=(partial "name_tag")
   }}
     "Properties": {
-      {{#if nameTag}}"Tags": [{"Key": "Name", "Value": {{helper "m:core" "propertyValue" nameTag}} }]{{/if}}
-    }
-  {{/resource}}
-
-  {{#resource logicalId="GatewayAttachment"}}
-    "Type": "AWS::EC2::VPCGatewayAttachment",
-    "Condition": "CreateInternetGatewayIsTrueCondition",
-    "Properties": {
-      "VpcId": {{ref "Vpc"}},
-      "InternetGatewayId": {{ref "InternetGateway"}}
-    }
-  {{/resource}}
-
-  {{#resource logicalId="PublicRouteTable"}}
-    "Type": "AWS::EC2::RouteTable",
-    "Properties": {
-      "VpcId": {{ref "Vpc"}},
       "Tags": [
-        {{#if nameTag}}{"Key": "Name", "Value": {{nameTag}} },{{/if}}
-        {"Key": "Network", "Value": "Public"}
+        {"Key": "Network", "Value": "Public"},
+        {{partial "name_tag"}}
       ]
     }
   {{/resource}}
 
-  {{#resource logicalId="PublicRoute"}}
-    "Type": "AWS::EC2::Route",
-    "Condition": "CreateInternetGatewayIsTrueCondition",
-    "Properties": {
-      "DestinationCidrBlock": "0.0.0.0/0",
-      "RouteTableId": {{ref "PublicRouteTable"}},
-      "GatewayId": {{ref "InternetGateway"}}
-    }
-  {{/resource}}
+  {{
+    resource "m:core" "spec"
+    type="AWS::EC2::Route"
+    logicalId="PublicRoute"
+    condition=(scopeId "CreateInternetGatewayIsTrueCondition")
+    DestinationCidrBlock="0.0.0.0/0"
+    RouteTableId=(ref "PublicRouteTable")
+    GatewayId=(ref "InternetGateway")
+  }}
 
   {{output "m:core" "base" logicalId="PublicRouteTableId" value=(ref "PublicRouteTable")}}

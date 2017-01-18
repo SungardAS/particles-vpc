@@ -1,8 +1,0 @@
-{{#resource "m:core" "base"
-  type="AWS::EC2::SubnetRouteTableAssociation"
-}}
-  {{#helper "m:core" "properties"}}
-    {{helper "m:core" "property" "RouteTableId"}}
-    {{helper "m:core" "property" "SubnetId"}}
-  {{/helper}}
-{{/resource}}

@@ -11,22 +11,19 @@
 
 {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "AvailabilityZone")}}
 
-{{#
-  resource "subnet"
+{{
+  resource "m:core" "spec"
+  type="AWS::EC2::Subnet"
   logicalId="Subnet"
-  cidrBlock=(ref "SubnetCidr")
-  vpcId=vpcId
+  AvailabilityZone=(
+    fnIf
+    (concat (scopeId "AvailabilityZone") "IsPopulated")
+    (ref "AvailabilityZone")
+    (ref "AWS::NoValue")
+  )
+  CidrBlock=(ref "SubnetCidr")
+  VpcId=vpcId
 }}
-  "Properties": {
-    "AvailabilityZone": {
-      "Fn::If": [
-        "{{concat (scopeId "AvailabilityZone") "IsPopulated"}}",
-        {{ref "AvailabilityZone"}},
-        {"Ref": "AWS::NoValue"}
-      ]
-    }
-  }
-{{/resource}}
 
 {{set "subnet/output_all" subnetLogicalId=(scopeId "Subnet")}}
 

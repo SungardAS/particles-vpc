@@ -1,5 +1,6 @@
 {
   "VpcDefaultSecurityGroup": {
+    "Description": "The default security group ID that is associated with the VPC",
     "Value": {
       "Fn::GetAtt": [
         "Vpc",

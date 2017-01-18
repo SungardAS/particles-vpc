@@ -3,17 +3,18 @@
   {{parameter "vpc/id" logicalId="VpcId"}}
   {{parameter "name_tag" logicalId="NameTag" default="particles-vpc"}}
 
-
   {{set "simple/subnet" nameTag=(ref "NameTag") vpcId=(ref "VpcId") }}
 
   {{parameter "vpc/route_table_id" logicalId="RouteTableId"}}
   {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "RouteTableId")}}
+
   {{
-    resource "subnet/route_table_association"
+    resource "m:core" "spec"
+    type="AWS::EC2::SubnetRouteTableAssociation"
     logicalId="RouteTableAssociation"
-    routeTableId=(ref "RouteTableId")
-    subnetId=(ref "Subnet")
     condition=(concat (scopeId "RouteTableId") "IsPopulated")
+    RouteTableId=(ref "RouteTableId")
+    SubnetId=(ref "Subnet")
   }}
 
 {{/layout}}
