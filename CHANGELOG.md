@@ -3,6 +3,11 @@ All notable changes to this project will be documented here in
 accordance with [Keep a CHANGELOG][keep-changelog-url].
 This project adheres to [Semantic Versioning][semver-url].
 
+## [0.5.2] - 2016-12-13
+
+### Added
+- particles for VPC Flow Logs
+
 ## [0.5.1] - 2016-08-29
 
 ### Added

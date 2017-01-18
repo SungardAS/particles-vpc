@@ -1,5 +1,6 @@
 {{
-  output "m:core" "base"
-  value=(partial "m:core" "fn_get_att" logicalId=securityGroupLogicalId attributeName="GroupId")
+  output "m:core" "attribute"
+  resourceLogicalId=securityGroupLogicalId
+  attributeName="GroupId"
   description=(concat "Group ID for " securityGroupLogicalId)
 }}

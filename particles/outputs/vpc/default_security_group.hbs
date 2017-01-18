@@ -1,6 +1,8 @@
 ---
 description: The default security group ID that is associated with the VPC
 ---
-{{#output "m:core" base}}
-  "Value": {"Fn::GetAtt": ["{{vpcLogicalId}}","DefaultSecurityGroup"]}
-{{/output}}
+{{
+  output "m:core" "attribute"
+  resourceLogicalId=vpcLogicalId
+  attributeName="DefaultSecurityGroup"
+}}

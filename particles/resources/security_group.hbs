@@ -1,9 +1,0 @@
-{{#resource "m:core" "base" type="AWS::EC2::SecurityGroup"}}
-  {{#helper "m:core" "properties"}}
-    {{helper "m:core" "property" "GroupDescription"}}
-    {{helper "m:core" "property" "VpcId"}}
-    {{helper "m:core" "property" "SecurityGroupEgress" optional=true}}
-    {{helper "m:core" "property" "SecurityGroupIngress" optional=true}}
-    {{helper "m:core" "property" "Tags" optional=true}}
-  {{/helper}}
-{{/resource}}
