@@ -37,7 +37,8 @@
     InternetGatewayId=(ref "InternetGateway")
   }}
 
-  {{#resource "m:core" "spec"
+  {{
+    resource "m:core" "spec"
     type="AWS::EC2::RouteTable"
     logicalId="PublicRouteTable"
     VpcId=(ref "Vpc")
