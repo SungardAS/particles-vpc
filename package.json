@@ -35,7 +35,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "condensation": "^0.6.1",
+    "condensation": "^0.6.3",
     "config": "^1.21.0",
     "git-rev-sync": "^1.6.0",
     "gulp": "^3.9.1",
