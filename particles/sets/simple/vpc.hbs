@@ -7,7 +7,7 @@
     type="AWS::EC2::VPC"
     logicalId="Vpc"
     CidrBlock=(ref "VpcCidr")
-    InstanceTenancy=default
+    InstanceTenancy="default"
     EnableDnsSupport="true"
     EnableDnsHostnames="true"
     Tags=(partial "name_tag")
