@@ -10,7 +10,7 @@
     InstanceTenancy="default"
     EnableDnsSupport="true"
     EnableDnsHostnames="true"
-    Tags=(partial "name_tag")
+    Tags=(arrayify (partial "name_tag"))
   }}
 
   {{set "vpc/output_all" vpcLogicalId="Vpc"}}
@@ -41,15 +41,17 @@
     type="AWS::EC2::RouteTable"
     logicalId="PublicRouteTable"
     VpcId=(ref "Vpc")
-    Tags=(partial "name_tag")
+    Tags=(
+      arrayify
+      (partial "name_tag")
+      (
+        helper "m:core" "propertySpec"
+        type="Tag"
+        Key="Network"
+        Value="Public"
+      )
+    )
   }}
-    "Properties": {
-      "Tags": [
-        {"Key": "Network", "Value": "Public"},
-        {{partial "name_tag"}}
-      ]
-    }
-  {{/resource}}
 
   {{
     resource "m:core" "spec"
