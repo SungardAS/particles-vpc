@@ -1,3 +1,7 @@
+/*
+* http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/enable-access-logs.html#attach-bucket-policy
+*/
+
 var regionMap = {
   "us-east-1": 127311923021,
   "us-east-2": 033677994240,
