@@ -3,6 +3,12 @@ All notable changes to this project will be documented here in
 accordance with [Keep a CHANGELOG][keep-changelog-url].
 This project adheres to [Semantic Versioning][semver-url].
 
+## [0.7.0] - 2017-05-11
+
+## Changed
+- FlowLogs addition cased too many breaking changes and did not adhere
+  to naming convention.  This has been moved to a dedicated set.
+
 ## [0.6.0] - 2017-01-18
 
 ### Changed

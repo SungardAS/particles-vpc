@@ -1,1 +1,6 @@
-{{#if nameTag}}{"Key": "Name", "Value": {{cValue nameTag}} }{{else}}{{/if}}
+{{
+  helper "m:core" "propertySpec"
+  type="Tag"
+  Key="Name"
+  Value=nameTag
+}}

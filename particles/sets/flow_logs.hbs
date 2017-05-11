@@ -1,0 +1,15 @@
+{{parameter "flowlogs/role_arn" logicalId="RoleArn"}}
+{{parameter "flowlogs/log_group" logicalId="GroupName"}}
+{{parameter "flowlogs/resource_id" logicalId="ResourceId"}}
+{{parameter "flowlogs/resource_type" logicalId="ResourceType"}}
+{{parameter "flowlogs/traffic_type" logicalId="TrafficType"}}
+{{
+  resource "m:core" "spec"
+  type="AWS::EC2::FlowLog"
+  logicalId="FlowLog"
+  DeliverLogsPermissionArn=(ref "RoleArn")
+  LogGroupName=(ref "LogGroupName")
+  ResourceId=(ref "ResourceId")
+  ResourceType=(ref "ResourceType")
+  TrafficType=(ref "TrafficType")
+}}
